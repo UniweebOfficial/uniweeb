@@ -6,44 +6,863 @@
     <title>UNIWEEB | Official Website</title>
     <link rel="icon" type="image/jpeg" href="LAMBANG%20UNIWEEB/UNIWEEB%20LOGO.jpg">
     <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: #570000;
+            color: #FFE6E6;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at top, #000000 0%, #570000 100%);
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(2px 2px at 20px 30px, #FF3838, transparent),
+                        radial-gradient(2px 2px at 40px 70px, #FF5C5C, transparent),
+                        radial-gradient(1px 1px at 90px 40px, #FF3838, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: stars 20s linear infinite;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        @keyframes stars {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-100px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 80px;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #FF3838, #FF5C5C);
+            border-radius: 2px;
+        }
+
+        #navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FFE6E6;
+        }
+
+        .logo-accent {
+            color: #FF3838;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: #888888;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FF3838;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link.active::after,
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-social {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-social .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(30, 5, 5, 0.85);
+            border: 1.5px solid rgba(220, 100, 100, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 200, 200, 0.9);
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .nav-social .social-icon:hover {
+            background: rgba(220, 80, 80, 0.6);
+            border-color: rgba(220, 80, 80, 0.9);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #FFE6E6;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 80px 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .greeting {
+            color: #D89C9C;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .cursor {
+            color: #FF3838;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .hero-quote {
+            color: #D89C9C;
+            font-size: 1.1rem;
+            margin-bottom: 35px;
+        }
+
+        .hero-social {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-social .social-link {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(30, 5, 5, 0.7);
+            border: 1.5px solid rgba(220, 100, 100, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 200, 200, 0.9);
+            transition: all 0.25s ease;
+            text-decoration: none;
+        }
+
+        .hero-social .social-link:hover {
+            background: rgba(220, 80, 80, 0.6);
+            border-color: rgba(220, 80, 80, 0.8);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sun-core {
+            width: 168px;
+            height: 168px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .sun-core img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 80px;
+            margin-top: 60px;
+        }
+
+        .about-desc p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #D89C9C;
+        }
+
+        .skills h3 {
+            color: #FFE6E6;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .bento-card {
+            border-radius: 20px;
+            padding: 20px 16px;
+            background: linear-gradient(135deg, rgba(30, 10, 10, 0.9), rgba(20, 5, 5, 0.95));
+            border: 1px solid rgba(220, 80, 80, 0.5);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(220, 80, 80, 0.9);
+            transform: translateY(-4px);
+        }
+
+        .bento-card h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(135deg, #fff, #ffaaaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .spotlight-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(50% 50% at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 80, 80, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .bento-card:hover .spotlight-overlay {
+            opacity: 1;
+        }
+
+        .z-10 {
+            position: relative;
+            z-index: 2;
+        }
+
+        .events-wrapper {
+            position: relative;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: visible;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            padding-bottom: 20px;
+        }
+
+        .events-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .events-wrapper::-webkit-scrollbar-track {
+            background: rgba(220,38,38,0.1);
+            border-radius: 10px;
+        }
+
+        .events-wrapper::-webkit-scrollbar-thumb {
+            background: rgba(220,38,38,0.5);
+            border-radius: 10px;
+        }
+
+        .projects-grid {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            padding: 8px 4px 16px 4px;
+        }
+
+        .project-card {
+            width: 220px;
+            flex-shrink: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #1a0808;
+            border: 1px solid rgba(220,38,38,0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px -12px rgba(220,38,38,0.3);
+            border-color: rgba(220,38,38,0.5);
+        }
+
+        .project-image {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            overflow: hidden;
+            position: relative;
+            background: #0c0303;
+        }
+
+        .project-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 14px 12px 16px;
+        }
+
+        .project-content h3 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            min-height: 44px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .project-tech span {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.8);
+            background: rgba(220,38,38,0.15);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 30px;
+            padding: 4px 10px;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 60px;
+        }
+
+        .contact-info p {
+            color: #D89C9C;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: #D89C9C;
+        }
+
+        .contact-item svg {
+            color: #FF3838;
+        }
+
+        .contact-details .social-link {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(30, 5, 5, 0.7);
+            border: 1.5px solid rgba(220, 100, 100, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 200, 200, 0.9);
+            transition: all 0.25s ease;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .contact-details .social-link:hover {
+            background: rgba(220, 80, 80, 0.6);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 56, 56, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 56, 56, 0.3);
+            border-radius: 8px;
+            color: #FFE6E6;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FF3838;
+        }
+
+        .glow-genz-button {
+            background: transparent;
+            border: 2px solid #FF3838;
+            border-radius: 12px;
+            color: #FF3838;
+            font-weight: 700;
+            font-size: 18px;
+            padding: 12px 36px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .glow-genz-button:hover {
+            color: white;
+            border-color: #FF5C5C;
+            box-shadow: 0 0 25px rgba(255, 56, 56, 1);
+            transform: scale(1.05);
+        }
+
+        .social-confirm-overlay, .visimisi-overlay, .admin-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-confirm-overlay.active, .visimisi-overlay.active, .admin-modal.active {
+            display: flex;
+        }
+
+        .social-confirm-box, .visimisi-box, .admin-box {
+            background: #1f0a0a;
+            border: 1px solid rgba(220,38,38,0.5);
+            border-radius: 24px;
+            padding: 28px 24px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .visimisi-box {
+            max-width: 560px;
+            text-align: left;
+        }
+
+        .admin-box {
+            max-width: 550px;
+            text-align: left;
+        }
+
+        .admin-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(220,38,38,0.3);
+            border-radius: 12px;
+            color: #fff;
+        }
+
+        .admin-box button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .admin-box .close-admin {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .event-list-item {
+            background: rgba(220,38,38,0.1);
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .visimisi-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.4);
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .visimisi-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .visimisi-box h2 {
+            color: #fff;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+        }
+
+        .visimisi-box .content-text li {
+            margin-bottom: 14px;
+            padding-left: 24px;
+            position: relative;
+            list-style: none;
+        }
+
+        .visimisi-box .content-text li::before {
+            content: "✨";
+            position: absolute;
+            left: 0;
+        }
+
+        .visimisi-divider {
+            width: 50px;
+            height: 3px;
+            margin-bottom: 20px;
+        }
+
+        .admin-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(220, 38, 38, 0.8);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 24px;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            transform: scale(1.1);
+            background: #dc2626;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .skills-grid {
+            display: none !important;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-content, .contact-content {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .hero-text { text-align: center; }
+            .hero-social { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: rgba(6, 21, 38, 0.95);
+                flex-direction: column;
+                padding: 20px;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .nav-menu.active { transform: translateX(0); }
+            .hamburger { display: flex; }
+            .hero-title { font-size: 2.5rem; }
+            .avatar-container { width: 350px; height: 350px; }
+            .sun-core { width: 120px; height: 120px; }
+            .bento-grid { grid-template-columns: 1fr; }
+            .project-card { width: 180px; }
+        }
+
+        @media (max-width: 640px) {
+            .hero-title { font-size: 2rem; }
+            .avatar-container { width: 250px; height: 250px; }
+            .sun-core { width: 90px; height: 90px; }
+            .hero-social .social-link { width: 42px; height: 42px; }
+        }
+    </style>
 </head>
 <body>
-    <header id="navbar">
-    <nav class="nav-container animate-on-scroll slide-in-top">
-            <div class="logo">
-                <span class="logo-accent">UNIWEEB</span>
+
+    <div class="social-confirm-overlay" id="socialConfirmOverlay">
+        <div class="social-confirm-box">
+            <div class="social-confirm-icon" id="confirmIcon" style="font-size:32px;">🔗</div>
+            <h3 id="confirmTitle">Buka Link?</h3>
+            <p id="confirmDesc">Kamu akan diarahkan ke halaman eksternal.</p>
+            <div class="confirm-btn-group" style="display:flex; gap:12px;">
+                <button class="btn-cancel" onclick="closeSocialConfirm()" style="flex:1; padding:12px; border-radius:40px; background:rgba(255,255,255,0.1); color:#fff; cursor:pointer;">Batal</button>
+                <button class="btn-confirm" id="confirmBtn" onclick="proceedSocialLink()" style="flex:1; padding:12px; border-radius:40px; background:#dc2626; color:#fff; cursor:pointer;">Buka Sekarang</button>
             </div>
-            
+        </div>
+    </div>
+
+    <div class="visimisi-overlay" id="visiOverlay">
+        <div class="visimisi-box" style="position:relative;">
+            <button class="visimisi-close" onclick="closeVisiMisi('visiOverlay')">✕</button>
+            <span class="visimisi-badge" style="background:rgba(220,38,38,0.2);color:#ef4444;">VISI</span>
+            <div class="visimisi-divider" style="background:linear-gradient(90deg,#dc2626,transparent);"></div>
+            <h2>Visi UNIWEEB</h2>
+            <div class="content-text">
+                <p>Menjadikan komunitas Uniweeb sebagai organisasi yang bergerak dalam bidang budaya jejepangan yang terstruktur dan memiliki kesan positif sehingga menjadi komunitas besar di Jawa Barat.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="visimisi-overlay" id="misiOverlay">
+        <div class="visimisi-box" style="position:relative;">
+            <button class="visimisi-close" onclick="closeVisiMisi('misiOverlay')">✕</button>
+            <span class="visimisi-badge" style="background:rgba(234,179,8,0.2);color:#eab308;">MISI</span>
+            <div class="visimisi-divider" style="background:linear-gradient(90deg,#eab308,transparent);"></div>
+            <h2>Misi UNIWEEB</h2>
+            <div class="content-text">
+                <ul>
+                    <li>Menciptakan komunitas positif yang bermanfaat bagi anggota maupun non anggota.</li>
+                    <li>Menyatukan pendapat dan pikiran antar anggota agar terwujud keselarasan dalam setiap kegiatan.</li>
+                    <li>Menjalin hubungan kerja sama yang menguntungkan antar organisasi dan komunitas lainnya.</li>
+                    <li>Menjadi wadah penampung ide maupun gagasan dari anggota.</li>
+                    <li>Berperan aktif dalam menyelenggarakan atau berpartisipasi dalam event jejepangan.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="admin-modal" id="adminModal">
+        <div class="admin-box">
+            <h3>🔐 Admin Login</h3>
+            <input type="password" id="adminPassword" placeholder="Password Admin">
+            <button onclick="adminLogin()">Login</button>
+            <button class="close-admin" onclick="closeAdminModal()">Batal</button>
+        </div>
+    </div>
+
+    <div class="admin-modal" id="adminDashboard">
+        <div class="admin-box">
+            <h3>📋 Kelola Event (Google Sheets)</h3>
+            <div style="margin-bottom: 20px; padding: 15px; background: rgba(220,38,38,0.1); border-radius: 12px;">
+                <p style="font-size: 0.85rem; margin-bottom: 10px;">📌 <strong>Cara Mengelola Event:</strong></p>
+                <p style="font-size: 0.8rem; color: #ccc;">1. Buka Google Sheets Anda<br>2. Edit/tambah/hapus baris data event<br>3. Refresh halaman ini untuk melihat perubahan</p>
+            </div>
+            <a href="https://docs.google.com/spreadsheets/d/13bcBa6-abMonsrmRY6axaJHqUwjROxumSdlDoqIS4m4/edit?usp=sharing" target="_blank" style="display: inline-block; background: #1565C0; color: white; padding: 12px 20px; border-radius: 12px; text-decoration: none; margin-bottom: 20px;">📊 Buka Google Sheets</a>
+            <h4>Daftar Event Saat Ini:</h4>
+            <div id="eventList"></div>
+            <button class="close-admin" onclick="logoutAdmin()" style="margin-top:15px;">🚪 Logout</button>
+        </div>
+    </div>
+
+    <header id="navbar">
+        <nav class="nav-container">
+            <div class="logo"><span class="logo-accent">UNIWEEB</span></div>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#about" class="nav-link">About U.</a></li>
                 <li><a href="#Event Anime" class="nav-link">Event Anime</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            
             <div class="nav-social">
-                <a href="https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1" aria-label="Google Drive" target="_blank" class="social-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6.82 8.5H15v1.18H9.43l-.83 2.82H15v1.18H8.18l-.83 2.82H17V22H6c-1.1 0-2-.9-2-2v-9.18c0-1.1.9-2 2-2z"/>
-                    </svg>
-                </a>
-                <a href="https://www.instagram.com/uniweeb_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" aria-label="Instagram" target="_blank" class="social-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 4a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5zm5.5-.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                    </svg>
-                </a>
-                <a href="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" aria-label="WhatsApp" class="social-icon" target="_blank" rel="noopener noreferrer">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                    </svg>
-                </a>
+                <a href="#" onclick="openSocialConfirm(event,'https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1','Google Drive','Buka Google Drive?','Kamu akan diarahkan ke Google Drive UNIWEEB.','#1565C0','📁')" class="social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.82 8.5H15v1.18H9.43l-.83 2.82H15v1.18H8.18l-.83 2.82H17V22H6c-1.1 0-2-.9-2-2v-9.18c0-1.1.9-2 2-2z"/></svg></a>
+                <a href="#" onclick="openSocialConfirm(event,'https://www.instagram.com/uniweeb_','Instagram','Buka Instagram?','Kamu akan diarahkan ke Instagram @uniweeb_.','#C2185B','📸')" class="social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2z"/></svg></a>
+                <a href="#" onclick="openSocialConfirm(event,'https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED','WhatsApp','Gabung WhatsApp Group?','Kamu akan bergabung ke grup WhatsApp UNIWEEB.','#1B5E20','💬')" class="social-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg></a>
             </div>
-            
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
         </nav>
     </header>
 
@@ -52,42 +871,19 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text">
-                        <p class="greeting">Hello, Welcome To Official Website </p>
-                        <h1 class="hero-title">
-                            <span id="typing-text">UNIWEEB</span>
-                            <span class="cursor">|</span>
-                        </h1>
-                        <p class="hero-quote">Halo, User! 
-Kehadiranmu membawa seribu warna pelangi di hariku! Jangan ragu untuk menetap, karena di sini keramahan mengalir sederas air terjun. Mari berteman sampai dunia lupa caranya berputar!</p>
+                        <p class="greeting">Hello, Welcome To Official Website</p>
+                        <h1 class="hero-title"><span id="typing-text">UNIWEEB</span><span class="cursor">|</span></h1>
+                        <p class="hero-quote">Halo, User! Kehadiranmu membawa seribu warna pelangi di hariku! Jangan ragu untuk menetap, karena di sini keramahan mengalir sederas air terjun. Mari berteman sampai dunia lupa caranya berputar!</p>
                         <div class="hero-social">
-                            <a href="https://discord.com/invite/EC77KPU9TE" class="social-link" aria-label="Discord" target="_blank">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M20.547 20.522c-.823.74-2.182.74-3.005 0l-3.365-3.126a8.599 8.599 0 0 1 2.658-1.67l.311.28a10.399 10.399 0 0 0 5.401 1.516zM6.91 20.522c-.823.74-1.717.74-2.54 0l-2.805-3.618a8.599 8.599 0 0 1 1.794-1.435l.12-.088a10.399 10.399 0 0 1 4.657.38l.311.28a8.499 8.499 0 0 1 .796 1.13z"/>
-                                </svg>
-                            </a>
-                            <a href="https://www.instagram.com/uniweeb_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="social-link" target="_blank" aria-label="Instagram">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 4a5.25 5.25 0 1 1 0 10.5 5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5zm5.5-.75a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                </svg>
-                            </a>
-                            <a href="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" class="social-link" aria-label="WhatsApp" target="_blank">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                                </svg>
-                            </a>
-                            <a href="https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1" class="social-link" aria-label="Google Drive" target="_blank">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M6.82 8.5H15v1.18H9.43l-.83 2.82H15v1.18H8.18l-.83 2.82H17V22H6c-1.1 0-2-.9-2-2v-9.18c0-1.1.9-2 2-2z"/>
-                                </svg>
-                            </a>
+                            <a href="#" onclick="openSocialConfirm(event,'https://discord.com/invite/EC77KPU9TE','Discord','Buka Discord?','Kamu akan bergabung ke server Discord UNIWEEB.','#5865F2','🎮')" class="social-link"><svg width="22" height="22" viewBox="0 0 127.14 96.36" fill="currentColor"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.86.68,1.75,1.36,2.66,2a68.42,68.42,0,0,1-10.87,5.18,79.26,79.26,0,0,0,6.89,11.1,105.25,105.25,0,0,0,32.19-16.15h0C128.75,71.42,126.1,48.66,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg></a>
+                            <a href="#" onclick="openSocialConfirm(event,'https://www.instagram.com/uniweeb_','Instagram','Buka Instagram?','Kamu akan diarahkan ke Instagram @uniweeb_.','#C2185B','📸')" class="social-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2z"/></svg></a>
+                            <a href="#" onclick="openSocialConfirm(event,'https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED','WhatsApp','Gabung WhatsApp Group?','Kamu akan bergabung ke grup WhatsApp UNIWEEB.','#1B5E20','💬')" class="social-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg></a>
+                            <a href="#" onclick="openSocialConfirm(event,'https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1','Google Drive','Buka Google Drive?','Kamu akan diarahkan ke Google Drive UNIWEEB.','#1565C0','📁')" class="social-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6.82 8.5H15v1.18H9.43l-.83 2.82H15v1.18H8.18l-.83 2.82H17V22H6c-1.1 0-2-.9-2-2v-9.18c0-1.1.9-2 2-2z"/></svg></a>
                         </div>
                     </div>
                     <div class="hero-visual">
                         <div class="avatar-container">
-                            <!-- Matahari (Sun) - Elemento visual central -->
-                            <div class="sun-core">
-                                <img src="LAMBANG%20UNIWEEB/UNIWEEB%20LOGO.jpg" alt="UNIWEEB Logo">
-                            </div>
+                            <div class="sun-core"><img src="LAMBANG%20UNIWEEB/UNIWEEB%20LOGO.jpg" alt="UNIWEEB Logo"></div>
                         </div>
                     </div>
                 </div>
@@ -100,63 +896,16 @@ Kehadiranmu membawa seribu warna pelangi di hariku! Jangan ragu untuk menetap, k
                 <div class="about-content">
                     <div class="about-left slide-in-left">
                         <div class="about-desc">
-                            <p>UNIWEEB dibuat pada tanggal 23 februari 2025, berawal dari sebuah grup biasa yang dibuat hanya untuk sekedar jadi grup janjian bernama "WEABOO akut", dimana grup tersebut didirikan dengan maksud agar lebih mudah berkomunikasi dengan teman mahasiswa yang memiliki hobi serupa dalam bidang jejepangan, lalu terbesitlah ide untuk membuat sebuah komunitas jejepangan, dan diberi nama "UNIWEEB", "UNI" yang bisa bermaksud UNIVERSAL dan "WEEB" yang merujuk pada grup sebelumnya "WEEBOO akut" dan diambil kata pertama "wibu" lalu Diambil lah kata "WEEB" yang akhirnya membentuk nama UNIWEEB dengan Admin Pertamanya "Valdi Nathaniel & Alif Muhamad Ramdan" dengan jumlah 12 anggota </p>
+                            <p>UNIWEEB dibuat pada tanggal 23 februari 2025, berawal dari sebuah grup biasa yang dibuat hanya untuk sekedar jadi grup janjian bernama "WEABOO akut", dimana grup tersebut didirikan dengan maksud agar lebih mudah berkomunikasi dengan teman mahasiswa yang memiliki hobi serupa dalam bidang jejepangan, lalu terbesitlah ide untuk membuat sebuah komunitas jejepangan, dan diberi nama "UNIWEEB", "UNI" yang bisa bermaksud UNIVERSAL dan "WEEB" yang merujuk pada grup sebelumnya "WEEBOO akut" dan diambil kata pertama "wibu" lalu Diambil lah kata "WEEB" yang akhirnya membentuk nama UNIWEEB dengan Admin Pertamanya "Valdi Nathaniel & Alif Muhamad Ramdan" dengan jumlah 12 anggota.</p>
                         </div>
                         <div class="skills-container">
-                            <div class="skills">
-                                <h3>Adapun Visi dan Misi yang kami naungi</h3>
-                                <div class="skills-grid">
-                                    <button class="skill-btn visi-btn" type="button">VISI</button>
-                                    <button class="skill-btn misi-btn" type="button">MISI</button>
-                                </div>
-                                <div class="visi-table hidden">
-                                    <table class="detail-table">
-                                        <tr><th>VISI:</th><td>Menjadikan komunitas Uniweeb sebagai organisasi yang bergerak dalam bidang budaya jejepangan yang terstruktur dan memiliki kesan positif sehingga menjadi komunitas besar di jawa barat.</td></tr>
-                                    </table>
-                                </div>
-                                <div class="misi-table hidden">
-                                    <table class="detail-table">
-                                        <tr><th>MISI:</th><td>Menciptakan sebuah komunitas atau perkumpulan positif yang bermanfaat bagi anggota maupun non anggota.
-Menyatukan pendapat dan pikiran antar anggota agar terwujud keselarasan dalam setiap kegiatan komunitas.
-Menjalin hubungan kerja sama yang menguntungkan antar organisasi dan komunitas lainnya, baik yang bergerak di bidang jejepangan maupun tidak.
-Menjadi wadah penampung ide maupun gagasan dari anggota, supaya tercipta komunitas yang berwawasan luas dan out of the box.
-Berperan aktif dalam menyelenggarakan atau berpartisipasi dalam event jejepangan supaya komunitas Uniweeb bisa berkembang menjadi komunitas besar dan lebih terkenal di jawa barat.</td></tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Bento Cards for VISI/MISI - Integrated -->
+                            <div class="skills"><h3>Adapun Visi dan Misi yang kami naungi</h3></div>
                             <div class="bento-grid">
-                                <!-- VISI Card -->
-                                <div class="bento-card spotlight-card visi-card" style="--mouse-x: 0; --mouse-y: 0;">
-                                    <div class="spotlight-overlay"></div>
-                                    <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
-                                    <div class="z-10">
-                                        <h3 class="text-xl font-bold mb-2">VISI UNIWEB</h3>
-                                        <p class="text-sm mb-4 opacity-75">Visi kami menjadi pemimpin utama dalam penyelenggaraan event anime berkualitas tinggi di Indonesia.</p>
-                                    </div>
-                                    <div class="absolute bottom-8 left-0 right-0 w-full overflow-hidden">
-                                        <div class="flex gap-8 animate-marquee whitespace-nowrap opacity-50 hover:opacity-100 transition-opacity">
-                                            <span class="text-3xl font-bold text-muted">VISI EVENT ANIME PREMIER KEPIMPINAN INOVASI UNIWEB</span>
-                                            <span class="text-3xl font-bold text-muted">VISI EVENT ANIME PREMIER KEPIMPINAN INOVASI UNIWEB</span>
-                                        </div>
-                                    </div>
+                                <div class="bento-card spotlight-card" onclick="openVisiMisi('visiOverlay')">
+                                    <div class="spotlight-overlay"></div><div class="z-10"><h3>VISI</h3></div>
                                 </div>
-
-                                <!-- MISI Card -->
-                                <div class="bento-card spotlight-card misi-card" style="--mouse-x: 0; --mouse-y: 0;">
-                                    <div class="spotlight-overlay"></div>
-                                    <div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
-                                    <div class="z-10">
-                                        <h3 class="text-xl font-bold mb-2">MISI UNIWEB</h3>
-                                        <p class="text-sm mb-4 opacity-75">Misi: Mengadakan event berkualitas, berkolaborasi dengan komunitas, dan terus berinovasi dalam konten anime.</p>
-                                    </div>
-                                    <div class="absolute bottom-8 left-0 right-0 w-full overflow-hidden">
-                                        <div class="flex gap-8 animate-marquee whitespace-nowrap opacity-50 hover:opacity-100 transition-opacity">
-                                            <span class="text-3xl font-bold text-muted">MISI KUALITAS KOLABORASI KOMUNITAS EVENT ANIME INOVASI</span>
-                                            <span class="text-3xl font-bold text-muted">MISI KUALITAS KOLABORASI KOMUNITAS EVENT ANIME INOVASI</span>
-                                        </div>
-                                    </div>
+                                <div class="bento-card spotlight-card" onclick="openVisiMisi('misiOverlay')">
+                                    <div class="spotlight-overlay"></div><div class="z-10"><h3>MISI</h3></div>
                                 </div>
                             </div>
                         </div>
@@ -168,85 +917,8 @@ Berperan aktif dalam menyelenggarakan atau berpartisipasi dalam event jejepangan
         <section id="Event Anime" class="section">
             <div class="container">
                 <h2 class="section-title">Event Anime</h2>
-                <div class="projects-grid slide-in-up">
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="ASET%20INFO%20EVENT/THMS.jpg" alt="Thousand Memories">
-                        </div>
-                        <div class="project-content">
-                            <h3>Thousand Memories | A SUNNY STORY</h3>
-                            <div class="project-tech">
-                                <span>📆 Tanggal: 29 Maret 2026</span>
-                                <span>📍 Lokasi: Rooftop Coffee, Ujung Berung</span>
-                                <span>🎫 Harga: Free Entry</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="ASET%20INFO%20EVENT/KYUU%20FEST.jpg" alt="KYUU FEST">
-                        </div>
-                        <div class="project-content">
-                            <h3>KYUU FEST | Indonesia Cosplay League</h3>
-                            <div class="project-tech">
-                                <span>📆 Tanggal: 4-5 April 2026</span>
-                                <span>📍 Lokasi: D'Botanica Mall</span>
-                                <span>🎫 Harga: Free Entry</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="ASET%20INFO%20EVENT/HARVEST.jpg" alt="Symphony Of HARVEST">
-                        </div>
-                        <div class="project-content">
-                            <h3>Symphony Of HARVEST</h3>
-                            <div class="project-tech">
-                                <span>📆 Tanggal: 4 April 2026</span>
-                                <span>📍 Lokasi: Cihampelas Walk</span>
-                                <span>🎫 Harga: FREE ENTRY</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="ASET%20INFO%20EVENT/FEVER%20MIKO%20EXPO.jpg" alt="ROAD TO MIKO EXPO">
-                        </div>
-                        <div class="project-content">
-                            <h3>ROAD TO MIKO EXPO | Axia Night Fever</h3>
-                            <div class="project-tech">
-                                <span>📆 Tanggal: 11 April 2026</span>
-                                <span>📍 Lokasi: RRQ Arena Bandung</span>
-                                <span>🎫 Harga: IDR: 35K</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="ASET%20INFO%20EVENT/MIKO%20EXPO.jpg" alt="MIKO EXPO">
-                        </div>
-                        <div class="project-content">
-                            <h3>MIKO EXPO | VocaRibut - Festival Axia</h3>
-                            <div class="project-tech">
-                                <span>📆 Tanggal: 3 Mei 2026</span>
-                                <span>📍 Lokasi: Miko Mall</span>
-                                <span>🎫 Harga: FREE ENTRY</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <img src="ASET%20INFO%20EVENT/TBP.jpg" alt="THE BOUNTY PRINCESS">
-                        </div>
-                        <div class="project-content">
-                            <h3>Sashimi THE BOUNTY PRINCESS Competitions</h3>
-                            <div class="project-tech">
-                                <span>📆 Tanggal: 9 Mei 2026</span>
-                                <span>📍 Lokasi: Universitas Widyatama</span>
-                                <span>🎫 Harga: FREE ENTRY</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="events-wrapper">
+                    <div class="projects-grid" id="eventsContainer"><div class="loading">Loading events...</div></div>
                 </div>
             </div>
         </section>
@@ -256,60 +928,276 @@ Berperan aktif dalam menyelenggarakan atau berpartisipasi dalam event jejepangan
                 <h2 class="section-title">Kontak kami jika Kalian membutuhkannya!!!</h2>
                 <div class="contact-content">
                     <div class="contact-info slide-in-left">
-                        <p>Tentunya! Agar informasinya sesuai dengan kebutuhanmu, ada beberapa jenis "kontak" yang biasa dibuat.
-
-Pilih format di bawah ini yang paling cocok dengan kebutuhanmu, lalu kamu tinggal isi datanya!</p>
+                        <p>Tentunya! Agar informasinya sesuai dengan kebutuhanmu, ada beberapa jenis "kontak" yang biasa dibuat. Pilih format di bawah ini yang paling cocok dengan kebutuhanmu, lalu kamu tinggal isi datanya!</p>
                         <div class="contact-details">
-                            <div class="contact-item">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                                </svg>
-                                <span>uniweebofficial@gmail.com</span>
-                            </div>
-                            <div class="contact-item">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                                </svg>
-                                <span>0895803992277</span>
-                            </div>
-                            <div class="contact-item">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                                </svg>
-                                <span>Kab. Bandung, Jawa Barat, Indonesia</span>
-                            </div>
-                            <a href="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" class="social-link" aria-label="WhatsApp" target="_blank">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                                </svg>
-                            </a>
+                            <div class="contact-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg><span>uniweebofficial@gmail.com</span></div>
+                            <div class="contact-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg><span>0895803992277</span></div>
+                            <div class="contact-item"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg><span>Kab. Bandung, Jawa Barat, Indonesia</span></div>
+                            <a href="#" onclick="openSocialConfirm(event,'https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED','WhatsApp','Gabung WhatsApp Group?','Kamu akan bergabung ke grup WhatsApp UNIWEEB.','#1B5E20','💬')" class="social-link"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg></a>
                         </div>
                     </div>
                     <div class="contact-form slide-in-right">
                         <form id="contact-form">
-                            <div class="form-group">
-                                <input type="text" placeholder="Your Name" required name="user_name">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" placeholder="Your Email" required name="user_email">
-                            </div>
-                            <div class="form-group">
-                                <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-                            </div>
+                            <div class="form-group"><input type="text" placeholder="Your Name" required name="user_name"></div>
+                            <div class="form-group"><input type="email" placeholder="Your Email" required name="user_email"></div>
+                            <div class="form-group"><textarea name="message" placeholder="Your Message" rows="5" required></textarea></div>
                             <button type="submit" class="glow-genz-button">Send Message</button>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
-
     </main>
+
+    <button class="admin-btn" onclick="openAdminModal()">🔧</button>
+
     <script src="script.js"></script>
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script>
-        (function(){
-            emailjs.init("YOUR_PUBLIC_KEY"); 
-        })();
+        (function(){ emailjs.init("sm08AnEPv9i2Vfjzu"); })();
+        const GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvPyk8YLAcI2zPOnkN-7bft0wjwKjX-aIzMOuBBU-N1oH7OaWdDA6UoJHARICB9-tPNu9RQb4Tce-P/pub?output=csv";
+        let events = [];
+
+        async function loadEventsFromSheet() {
+            const container = document.getElementById('eventsContainer');
+            if (!container) return;
+            
+            try {
+                const response = await fetch(GOOGLE_SHEETS_URL);
+                const csvText = await response.text();
+                
+                const rows = csvText.split('\n').filter(row => row.trim());
+                if (rows.length < 2) {
+                    container.innerHTML = '<div class="loading">Belum ada event. Login sebagai admin untuk menambahkan event.</div>';
+                    return;
+                }
+                
+                events = [];
+                for (let i = 1; i < rows.length; i++) {
+                    const values = rows[i].split(',').map(v => v.replace(/"/g, '').trim());
+                    if (values.length >= 4 && values[0]) {
+                        events.push({
+                            name: values[0] || 'Event',
+                            date: values[1] || 'TBA',
+                            location: values[2] || 'TBA',
+                            price: values[3] || 'Free',
+                            image: values[4] || 'https://via.placeholder.com/300x533?text=No+Image'
+                        });
+                    }
+                }
+                
+                renderEvents();
+                renderEventListAdmin();
+            } catch (error) {
+                console.error('Error loading events:', error);
+                container.innerHTML = '<div class="loading">Gagal memuat event. Pastikan Google Sheets sudah dipublish ke web.</div>';
+            }
+        }
+
+        function renderEvents() {
+            const container = document.getElementById('eventsContainer');
+            if (!container) return;
+            
+            if (events.length === 0) {
+                container.innerHTML = '<div class="loading">Belum ada event. Login sebagai admin untuk menambahkan event.</div>';
+                return;
+            }
+            
+            container.innerHTML = events.map(event => `
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="${event.image}" alt="${event.name}" onerror="this.src='https://via.placeholder.com/300x533?text=No+Image'">
+                    </div>
+                    <div class="project-content">
+                        <h3>${event.name}</h3>
+                        <div class="project-tech">
+                            <span>📆 ${event.date}</span>
+                            <span>📍 ${event.location}</span>
+                            <span>🎫 ${event.price}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderEventListAdmin() {
+            const listContainer = document.getElementById('eventList');
+            if (!listContainer) return;
+            
+            if (events.length === 0) {
+                listContainer.innerHTML = '<p style="color:rgba(255,255,255,0.6)">Belum ada event. Buka Google Sheets untuk menambah event.</p>';
+                return;
+            }
+            
+            listContainer.innerHTML = events.map((event, index) => `
+                <div class="event-list-item">
+                    <div style="flex:1">
+                        <strong>${event.name}</strong><br>
+                        <small>${event.date} | ${event.location}</small>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAdminModal() {
+            document.getElementById('adminModal').classList.add('active');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModal').classList.remove('active');
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function openAdminDashboard() {
+            document.getElementById('adminDashboard').classList.add('active');
+        }
+
+        function closeAdminDashboard() {
+            document.getElementById('adminDashboard').classList.remove('active');
+        }
+
+        function adminLogin() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === 'uniweebIDofficial') {
+                closeAdminModal();
+                openAdminDashboard();
+            } else {
+                alert('Password salah!');
+            }
+        }
+
+        function logoutAdmin() {
+            closeAdminDashboard();
+            alert('Anda telah logout dari dashboard admin.');
+        }
+
+        let _pendingUrl = '';
+        function openSocialConfirm(e, url, platform, title, desc, color, emoji) {
+            e.preventDefault();
+            _pendingUrl = url;
+            const icon = document.getElementById('confirmIcon');
+            icon.textContent = emoji;
+            icon.style.background = color + '33';
+            document.getElementById('confirmTitle').textContent = title;
+            document.getElementById('confirmDesc').textContent = desc;
+            document.getElementById('confirmBtn').style.background = color;
+            document.getElementById('socialConfirmOverlay').classList.add('active');
+        }
+        function closeSocialConfirm() {
+            document.getElementById('socialConfirmOverlay').classList.remove('active');
+            _pendingUrl = '';
+        }
+        function proceedSocialLink() {
+            if (_pendingUrl) window.open(_pendingUrl, '_blank');
+            closeSocialConfirm();
+        }
+
+        function openVisiMisi(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeVisiMisi(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function initNavbar() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+            if (hamburger) hamburger.addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active'); });
+            navLinks.forEach(link => link.addEventListener('click', () => { hamburger?.classList.remove('active'); navMenu?.classList.remove('active'); }));
+            const sections = document.querySelectorAll('section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(l => l.classList.remove('active'));
+                        document.querySelector(`a[href="#${entry.target.id}"]`)?.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.3, rootMargin: '-80px 0px -80px 0px' });
+            sections.forEach(s => observer.observe(s));
+        }
+
+        function initTypingEffect() {
+            const typingText = document.getElementById('typing-text');
+            if (!typingText) return;
+            const phrase = 'UNIWEEB';
+            let i = 0;
+            function type() { typingText.textContent = phrase.substring(0, i+1); i++; if (i < phrase.length) setTimeout(type, 100); }
+            type();
+        }
+
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const target = document.getElementById(this.getAttribute('href').substring(1));
+                    if (target) { e.preventDefault(); window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' }); }
+                });
+            });
+        }
+
+        function initSpotlight() {
+            document.querySelectorAll('.spotlight-card').forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+                    card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+                });
+            });
+        }
+
+        function initContactForm() {
+            const form = document.getElementById('contact-form');
+            if (form) form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                emailjs.sendForm("service_jtnlzjh", "template_1g0ebr8", this)
+                    .then(() => { alert("✅ Pesan berhasil dikirim!"); form.reset(); })
+                    .catch(() => alert("❌ Gagal mengirim pesan"));
+            });
+        }
+
+        function initAnimations() {
+            const elements = document.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-up');
+            new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0) translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 }).observe(elements);
+            elements.forEach(el => { el.style.opacity = '0'; el.style.transition = 'all 1s ease'; });
+            document.querySelectorAll('.slide-in-left').forEach(el => el.style.transform = 'translateX(-30px)');
+            document.querySelectorAll('.slide-in-right').forEach(el => el.style.transform = 'translateX(30px)');
+            document.querySelectorAll('.slide-in-up').forEach(el => el.style.transform = 'translateY(30px)');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadEventsFromSheet();
+            initNavbar();
+            initTypingEffect();
+            initSmoothScroll();
+            initSpotlight();
+            initContactForm();
+            initAnimations();
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeVisiMisi('visiOverlay');
+                    closeVisiMisi('misiOverlay');
+                    closeSocialConfirm();
+                    closeAdminModal();
+                    closeAdminDashboard();
+                }
+            });
+
+            document.getElementById('visiOverlay')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeVisiMisi('visiOverlay'); });
+            document.getElementById('misiOverlay')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeVisiMisi('misiOverlay'); });
+            document.getElementById('socialConfirmOverlay')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeSocialConfirm(); });
+            document.getElementById('adminModal')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeAdminModal(); });
+            document.getElementById('adminDashboard')?.addEventListener('click', (e) => { if (e.target === e.currentTarget) closeAdminDashboard(); });
+        });
     </script>
 </body>
 </html>
