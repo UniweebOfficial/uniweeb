@@ -1,14 +1,11 @@
-// ============ EMAILJS CONFIGURATION ============
-// Public Key dari dashboard
 (function() {
-    emailjs.init("CyodEGcRSBwMk2WN9");  // ✅ Sudah update
+    emailjs.init("CyodEGcRSBwMk2WN9");
 })();
 
-// Konfigurasi Email
 const EMAIL_CONFIG = {
-    serviceId: "service_wm5965u",           // ✅ Service ID
-    contactTemplateId: "template_k87bzxg",   // ✅ Template Contact Us
-    autoReplyTemplateId: "template_2w0jfao", // ✅ Template Auto-Reply
+    serviceId: "service_wm5965u",
+    contactTemplateId: "template_k87bzxg", 
+    autoReplyTemplateId: "template_2w0jfao", 
     adminEmail: "uniweebofficial@gmail.com"
 };
 
@@ -18,7 +15,6 @@ let isAdminLoggedIn = false;
 let logoClickCount = 0;
 let logoClickTimer = null;
 
-// ============ ADMIN LOGO TRIGGER ============
 function initAdminLogoTrigger() {
     const logo = document.getElementById('adminLogoTrigger');
     if (!logo) return;
@@ -131,7 +127,6 @@ function showNotification(message, bgColor) {
     }, 3000);
 }
 
-// ============ GOOGLE SHEETS EVENTS ============
 async function loadEventsFromSheet() {
     const container = document.getElementById('eventsContainer');
     if (!container) return;
@@ -213,7 +208,6 @@ function renderEventListAdmin() {
     `).join('');
 }
 
-// ============ ADMIN FUNCTIONS ============
 function openAdminModal() {
     document.getElementById('adminModal').classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -278,7 +272,6 @@ function hideAdminButton() {
     }
 }
 
-// ============ SOCIAL MEDIA CONFIRM ============
 let pendingUrl = '';
 
 function openSocialConfirm(e, url, platform, title, desc, color, emoji) {
@@ -304,7 +297,6 @@ function proceedSocialLink() {
     closeSocialConfirm();
 }
 
-// ============ VISI MISI ============
 function openVisiMisi(id) {
     document.getElementById(id).classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -315,7 +307,6 @@ function closeVisiMisi(id) {
     document.body.style.overflow = '';
 }
 
-// ============ CONTACT FORM (UPDATED) ============
 function initContactForm() {
     const form = document.getElementById('contact-form');
     if (form) {
@@ -325,8 +316,7 @@ function initContactForm() {
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
             btn.disabled = true;
-            
-            // ✅ Menggunakan kredensial yang sudah didapat
+
             emailjs.sendForm(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.contactTemplateId, this)
                 .then(() => {
                     showNotification('✅ Pesan berhasil dikirim! Kami akan segera membalas.', '#4caf50');
@@ -344,7 +334,6 @@ function initContactForm() {
     }
 }
 
-// ============ SOCIAL LINKS ============
 function initSocialLinks() {
     const socialLinks = document.querySelectorAll('.social-link, .social-icon');
     socialLinks.forEach(link => {
@@ -364,7 +353,6 @@ function initSocialLinks() {
     });
 }
 
-// ============ NAVBAR ============
 function initNavbar() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
@@ -413,7 +401,6 @@ function initNavbar() {
     });
 }
 
-// ============ TYPING EFFECT ============
 function initTypingEffect() {
     const typingText = document.getElementById('typing-text');
     if (!typingText) return;
@@ -432,7 +419,6 @@ function initTypingEffect() {
     type();
 }
 
-// ============ SMOOTH SCROLL ============
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
@@ -449,7 +435,6 @@ function initSmoothScroll() {
     });
 }
 
-// ============ ANIMATIONS ============
 function initAOS() {
     if (typeof AOS !== 'undefined') {
         AOS.init({
@@ -560,7 +545,6 @@ function initPopupClose() {
     });
 }
 
-// ============ INITIALIZATION ============
 document.addEventListener('DOMContentLoaded', () => {
     loadEventsFromSheet();
     initNavbar();
