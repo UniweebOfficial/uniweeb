@@ -1,15 +1,317 @@
-document.addEventListener('DOMContentLoaded', function() {
-    initNavbar();
-    initTypingEffect();
-    initSmoothScroll();
-    initSectionAnimations();
-    initContactForm();
-});
+(function() {
+    emailjs.init("sm08AnEPv9i2Vfjzu");
+})();
+
+const GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvPyk8YLAcI2zPOnkN-7bft0wjwKjX-aIzMOuBBU-N1oH7OaWdDA6UoJHARICB9-tPNu9RQb4Tce-P/pub?output=csv";
+let events = [];
+let isAdminLoggedIn = false;
+let logoClickCount = 0;
+let logoClickTimer = null;
+
+function initAdminLogoTrigger() {
+    const logo = document.getElementById('adminLogoTrigger');
+    if (!logo) return;
+    
+    logo.addEventListener('click', (e) => {
+        e.preventDefault();
+        logoClickCount++;
+        logo.classList.add('logo-click-effect');
+        setTimeout(() => {
+            logo.classList.remove('logo-click-effect');
+        }, 300);
+
+        if (logoClickTimer) {
+            clearTimeout(logoClickTimer);
+        }
+
+        if (logoClickCount >= 3) {
+            logoClickCount = 0;
+            if (logoClickTimer) clearTimeout(logoClickTimer);
+            if (isAdminLoggedIn) {
+                openAdminDashboard();
+                showNotification('🔓 Selamat datang kembali, Admin!', '#4caf50');
+            } else {
+                openAdminModal();
+                showNotification('🔐 Silakan masukkan password admin', '#ff9800');
+            }
+        } else {
+            logoClickTimer = setTimeout(() => {
+                logoClickCount = 0;
+            }, 1000);
+        }
+    });
+
+    let tooltipTimeout;
+    logo.addEventListener('mouseenter', () => {
+        tooltipTimeout = setTimeout(() => {
+            showTooltip(logo, 'Klik 3x untuk akses admin', '#dc2626');
+        }, 800);
+    });
+    
+    logo.addEventListener('mouseleave', () => {
+        clearTimeout(tooltipTimeout);
+        hideTooltip();
+    });
+}
+
+let tooltipElement = null;
+
+function showTooltip(element, message, color) {
+    if (tooltipElement) {
+        tooltipElement.remove();
+    }
+    
+    tooltipElement = document.createElement('div');
+    tooltipElement.className = 'admin-tooltip';
+    tooltipElement.innerHTML = `
+        <div style="background: ${color}; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; white-space: nowrap;">
+            <i class="fas fa-key"></i> ${message}
+        </div>
+    `;
+    tooltipElement.style.position = 'fixed';
+    tooltipElement.style.zIndex = '10000';
+    tooltipElement.style.pointerEvents = 'none';
+    
+    const rect = element.getBoundingClientRect();
+    tooltipElement.style.top = (rect.bottom + 5) + 'px';
+    tooltipElement.style.left = (rect.left + (rect.width / 2) - 50) + 'px';
+    
+    document.body.appendChild(tooltipElement);
+    
+    setTimeout(() => {
+        if (tooltipElement) {
+            tooltipElement.style.opacity = '0';
+            setTimeout(() => {
+                if (tooltipElement) tooltipElement.remove();
+                tooltipElement = null;
+            }, 300);
+        }
+    }, 2000);
+}
+
+function hideTooltip() {
+    if (tooltipElement) {
+        tooltipElement.remove();
+        tooltipElement = null;
+    }
+}
+
+function showNotification(message, bgColor) {
+    const notification = document.createElement('div');
+    notification.className = 'admin-notification';
+    notification.innerHTML = `
+        <div style="background: ${bgColor}; color: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3);">
+            ${message}
+        </div>
+    `;
+    notification.style.position = 'fixed';
+    notification.style.bottom = '80px';
+    notification.style.right = '20px';
+    notification.style.zIndex = '10001';
+    notification.style.animation = 'slideInRight 0.3s ease';
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+async function loadEventsFromSheet() {
+    const container = document.getElementById('eventsContainer');
+    if (!container) return;
+    
+    try {
+        const response = await fetch(GOOGLE_SHEETS_URL);
+        const csvText = await response.text();
+        
+        const rows = csvText.split('\n').filter(row => row.trim());
+        if (rows.length < 2) {
+            container.innerHTML = '<div class="loading">✨ Belum ada event. Login sebagai admin untuk menambahkan event.</div>';
+            return;
+        }
+        
+        events = [];
+        for (let i = 1; i < rows.length; i++) {
+            const values = rows[i].split(',').map(v => v.replace(/"/g, '').trim());
+            if (values.length >= 4 && values[0]) {
+                events.push({
+                    name: values[0] || 'Event',
+                    date: values[1] || 'TBA',
+                    location: values[2] || 'TBA',
+                    price: values[3] || 'Free',
+                    image: values[4] || 'https://via.placeholder.com/300x450?text=No+Image'
+                });
+            }
+        }
+        
+        renderEvents();
+        renderEventListAdmin();
+    } catch (error) {
+        console.error('Error loading events:', error);
+        container.innerHTML = '<div class="loading">⚠️ Gagal memuat event. Pastikan Google Sheets sudah dipublish ke web.</div>';
+    }
+}
+
+function renderEvents() {
+    const container = document.getElementById('eventsContainer');
+    if (!container) return;
+    
+    if (events.length === 0) {
+        container.innerHTML = '<div class="loading">✨ Belum ada event. Login sebagai admin untuk menambahkan event.</div>';
+        return;
+    }
+    
+    container.innerHTML = events.map((event, index) => `
+        <div class="project-card" style="animation-delay: ${index * 0.1}s">
+            <div class="project-image">
+                <img src="${event.image}" alt="${event.name}" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
+            </div>
+            <div class="project-content">
+                <h3>${event.name}</h3>
+                <div class="project-tech">
+                    <span><i class="fas fa-calendar-alt"></i> ${event.date}</span>
+                    <span><i class="fas fa-map-marker-alt"></i> ${event.location}</span>
+                    <span><i class="fas fa-ticket-alt"></i> ${event.price}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+function renderEventListAdmin() {
+    const listContainer = document.getElementById('eventList');
+    if (!listContainer) return;
+    
+    if (events.length === 0) {
+        listContainer.innerHTML = '<p style="color:rgba(255,255,255,0.6)">📭 Belum ada event. Buka Google Sheets untuk menambah event.</p>';
+        return;
+    }
+    
+    listContainer.innerHTML = events.map((event, index) => `
+        <div class="event-list-item">
+            <div style="flex:1">
+                <strong>🎪 ${event.name}</strong><br>
+                <small><i class="fas fa-calendar-alt"></i> ${event.date} | <i class="fas fa-map-marker-alt"></i> ${event.location}</small>
+            </div>
+        </div>
+    `).join('');
+}
+
+function openAdminModal() {
+    document.getElementById('adminModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAdminModal() {
+    document.getElementById('adminModal').classList.remove('active');
+    document.getElementById('adminPassword').value = '';
+    document.body.style.overflow = '';
+}
+
+function openAdminDashboard() {
+    document.getElementById('adminDashboard').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAdminDashboard() {
+    document.getElementById('adminDashboard').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+function adminLogin() {
+    const password = document.getElementById('adminPassword').value;
+    if (password === 'uniweebIDofficial') {
+        isAdminLoggedIn = true;
+        localStorage.setItem('uniweeb_admin', 'true');
+        closeAdminModal();
+        openAdminDashboard();
+        showAdminButton();
+
+        showNotification('✅ Login berhasil! Selamat datang Admin.', '#4caf50');
+        
+        const btn = document.querySelector('.admin-login-btn');
+        btn.style.animation = 'pulse 0.5s ease';
+        setTimeout(() => {
+            btn.style.animation = '';
+        }, 500);
+    } else {
+        alert('❌ Password salah!');
+        showNotification('❌ Password salah! Coba lagi.', '#f44336');
+        const input = document.getElementById('adminPassword');
+        input.style.animation = 'shake 0.3s ease';
+        setTimeout(() => {
+            input.style.animation = '';
+        }, 300);
+    }
+}
+
+function logoutAdmin() {
+    isAdminLoggedIn = false;
+    localStorage.removeItem('uniweeb_admin');
+    closeAdminDashboard();
+    hideAdminButton();
+    showNotification('👋 Logout berhasil!', '#ff9800');
+}
+
+function showAdminButton() {
+    const adminBtn = document.getElementById('adminBtn');
+    if (adminBtn) {
+        adminBtn.style.display = 'flex';
+        adminBtn.style.animation = 'float 0.5s ease-out';
+    }
+}
+
+function hideAdminButton() {
+    const adminBtn = document.getElementById('adminBtn');
+    if (adminBtn) {
+        adminBtn.style.display = 'none';
+    }
+}
+
+let pendingUrl = '';
+
+function openSocialConfirm(e, url, platform, title, desc, color, emoji) {
+    e.preventDefault();
+    pendingUrl = url;
+    const icon = document.getElementById('confirmIcon');
+    icon.textContent = emoji;
+    document.getElementById('confirmTitle').textContent = title;
+    document.getElementById('confirmDesc').textContent = desc;
+    document.getElementById('confirmBtn').style.background = color;
+    document.getElementById('socialConfirmOverlay').classList.add('active');
+}
+
+function closeSocialConfirm() {
+    document.getElementById('socialConfirmOverlay').classList.remove('active');
+    pendingUrl = '';
+}
+
+function proceedSocialLink() {
+    if (pendingUrl) {
+        window.open(pendingUrl, '_blank');
+    }
+    closeSocialConfirm();
+}
+
+function openVisiMisi(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeVisiMisi(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+}
 
 function initNavbar() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
+    const navbar = document.getElementById('navbar');
 
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', () => {
@@ -31,19 +333,26 @@ function initNavbar() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                navLinks.forEach(link => link.classList.remove('active'));
+                navLinks.forEach(l => l.classList.remove('active'));
                 const activeLink = document.querySelector(`a[href="#${entry.target.id}"]`);
                 if (activeLink) {
                     activeLink.classList.add('active');
                 }
             }
         });
-    }, {
-        threshold: 0.3,
-        rootMargin: '-80px 0px -80px 0px'
-    });
+    }, { threshold: 0.3, rootMargin: '-80px 0px -80px 0px' });
     
     sections.forEach(section => observer.observe(section));
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.style.background = 'rgba(0, 0, 0, 0.95)';
+            navbar.style.backdropFilter = 'blur(15px)';
+        } else {
+            navbar.style.background = 'rgba(0, 0, 0, 0.85)';
+            navbar.style.backdropFilter = 'blur(10px)';
+        }
+    });
 }
 
 function initTypingEffect() {
@@ -51,37 +360,28 @@ function initTypingEffect() {
     if (!typingText) return;
     
     const phrase = 'UNIWEEB';
-    let currentCharIndex = 0;
-    let typingSpeed = 100;
+    let i = 0;
     
-    function typeEffect() {
-        typingText.textContent = phrase.substring(0, currentCharIndex + 1);
-        currentCharIndex++;
-        
-        if (currentCharIndex < phrase.length) {
-            setTimeout(typeEffect, typingSpeed);
+    function type() {
+        if (i < phrase.length) {
+            typingText.textContent = phrase.substring(0, i + 1);
+            i++;
+            setTimeout(type, 100);
         }
     }
-
-    typeEffect();
+    
+    type();
 }
 
 function initSmoothScroll() {
-    const navLinks = document.querySelectorAll('a[href^="#"]');
-
-    navLinks.forEach(link => {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
             const targetId = this.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
-
             if (targetElement) {
                 e.preventDefault();
-                const headerOffset = 80;
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
                 window.scrollTo({
-                    top: offsetPosition,
+                    top: targetElement.offsetTop - 80,
                     behavior: 'smooth'
                 });
             }
@@ -89,54 +389,217 @@ function initSmoothScroll() {
     });
 }
 
-function initSectionAnimations() {
-    const elements = document.querySelectorAll('.slide-in-left, .slide-in-right, .slide-in-up');
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            btn.disabled = true;
+            
+            emailjs.sendForm("service_jtnlzjh", "template_1g0ebr8", this)
+                .then(() => {
+                    showNotification('✅ Pesan berhasil dikirim!', '#4caf50');
+                    form.reset();
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                })
+                .catch(() => {
+                    showNotification('❌ Gagal mengirim pesan', '#f44336');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+        });
+    }
+}
 
-    const elementObserver = new IntersectionObserver((entries) => {
+function initSocialLinks() {
+    const socialLinks = document.querySelectorAll('.social-link, .social-icon');
+    socialLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const url = link.getAttribute('data-url');
+            const platform = link.getAttribute('data-platform');
+            const title = link.getAttribute('data-title');
+            const desc = link.getAttribute('data-desc');
+            const color = link.getAttribute('data-color');
+            const emoji = link.getAttribute('data-emoji');
+            
+            if (url) {
+                openSocialConfirm(e, url, platform, title, desc, color, emoji);
+            }
+        });
+    });
+}
+
+function initAOS() {
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100,
+            easing: 'ease-out'
+        });
+    }
+}
+
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll('.hero-text, .about-desc, .visi-misi-card, .contact-info, .contact-form');
+    
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
-                if (entry.target.classList.contains('slide-in-left')) {
-                    entry.target.style.transform = 'translateX(0)';
-                } else if (entry.target.classList.contains('slide-in-right')) {
-                    entry.target.style.transform = 'translateX(0)';
-                } else {
-                    entry.target.style.transform = 'translateY(0)';
-                }
+                entry.target.style.transform = 'translateX(0) translateY(0)';
+                observer.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    });
-
-    elements.forEach(element => elementObserver.observe(element));
-
-    const spotlightCards = document.querySelectorAll('.spotlight-card');
-    spotlightCards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
-        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    
+    revealElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transition = 'all 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+        if (el.classList.contains('hero-text') || el.classList.contains('contact-info')) {
+            el.style.transform = 'translateX(-30px)';
+        } else if (el.classList.contains('contact-form')) {
+            el.style.transform = 'translateX(30px)';
+        } else {
+            el.style.transform = 'translateY(30px)';
+        }
+        observer.observe(el);
     });
 }
 
-function initContactForm() {
-    const form = document.getElementById('contact-form');
-    if (!form) return;
+function addAnimationStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes logoClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); color: var(--accent); }
+            100% { transform: scale(1); }
+        }
+        
+        .admin-tooltip {
+            animation: fadeInUp 0.2s ease;
+            transition: opacity 0.3s ease;
+        }
+        
+        .admin-notification {
+            animation: slideInRight 0.3s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+function checkAdminSession() {
+    const savedAdmin = localStorage.getItem('uniweeb_admin');
+    if (savedAdmin === 'true') {
+        isAdminLoggedIn = true;
+        showAdminButton();
+    }
+}
 
-        emailjs.sendForm("service_jtnlzjh", "template_1g0ebr8", this)
-            .then(() => {
-                alert("✅ Pesan berhasil dikirim!");
-                form.reset();
-            }, (error) => {
-                alert("❌ Gagal mengirim pesan: " + error.text);
-            });
+function initPopupClose() {
+    document.getElementById('visiOverlay')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeVisiMisi('visiOverlay');
+    });
+    document.getElementById('misiOverlay')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeVisiMisi('misiOverlay');
+    });
+    document.getElementById('socialConfirmOverlay')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeSocialConfirm();
+    });
+    document.getElementById('adminModal')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeAdminModal();
+    });
+    document.getElementById('adminDashboard')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeAdminDashboard();
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeVisiMisi('visiOverlay');
+            closeVisiMisi('misiOverlay');
+            closeSocialConfirm();
+            closeAdminModal();
+            closeAdminDashboard();
+        }
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadEventsFromSheet();
+    initNavbar();
+    initTypingEffect();
+    initSmoothScroll();
+    initContactForm();
+    initSocialLinks();
+    initScrollReveal();
+    initPopupClose();
+    checkAdminSession();
+    addAnimationStyles();
+    initAdminLogoTrigger(); 
+    setTimeout(() => {
+        initAOS();
+    }, 100);
+
+    setInterval(loadEventsFromSheet, 30000);
+});
