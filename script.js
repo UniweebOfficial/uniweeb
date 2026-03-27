@@ -1,6 +1,16 @@
+// ============ EMAILJS CONFIGURATION ============
+// Public Key dari dashboard
 (function() {
-    emailjs.init("sm08AnEPv9i2Vfjzu");
+    emailjs.init("CyodEGcRSBwMk2WN9");  // ✅ Sudah update
 })();
+
+// Konfigurasi Email
+const EMAIL_CONFIG = {
+    serviceId: "service_wm5965u",           // ✅ Service ID
+    contactTemplateId: "template_k87bzxg",   // ✅ Template Contact Us
+    autoReplyTemplateId: "template_2w0jfao", // ✅ Template Auto-Reply
+    adminEmail: "uniweebofficial@gmail.com"
+};
 
 const GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTvPyk8YLAcI2zPOnkN-7bft0wjwKjX-aIzMOuBBU-N1oH7OaWdDA6UoJHARICB9-tPNu9RQb4Tce-P/pub?output=csv";
 let events = [];
@@ -8,6 +18,7 @@ let isAdminLoggedIn = false;
 let logoClickCount = 0;
 let logoClickTimer = null;
 
+// ============ ADMIN LOGO TRIGGER ============
 function initAdminLogoTrigger() {
     const logo = document.getElementById('adminLogoTrigger');
     if (!logo) return;
@@ -120,6 +131,7 @@ function showNotification(message, bgColor) {
     }, 3000);
 }
 
+// ============ GOOGLE SHEETS EVENTS ============
 async function loadEventsFromSheet() {
     const container = document.getElementById('eventsContainer');
     if (!container) return;
@@ -201,6 +213,7 @@ function renderEventListAdmin() {
     `).join('');
 }
 
+// ============ ADMIN FUNCTIONS ============
 function openAdminModal() {
     document.getElementById('adminModal').classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -230,14 +243,7 @@ function adminLogin() {
         closeAdminModal();
         openAdminDashboard();
         showAdminButton();
-
         showNotification('✅ Login berhasil! Selamat datang Admin.', '#4caf50');
-        
-        const btn = document.querySelector('.admin-login-btn');
-        btn.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => {
-            btn.style.animation = '';
-        }, 500);
     } else {
         alert('❌ Password salah!');
         showNotification('❌ Password salah! Coba lagi.', '#f44336');
@@ -272,6 +278,7 @@ function hideAdminButton() {
     }
 }
 
+// ============ SOCIAL MEDIA CONFIRM ============
 let pendingUrl = '';
 
 function openSocialConfirm(e, url, platform, title, desc, color, emoji) {
@@ -297,6 +304,7 @@ function proceedSocialLink() {
     closeSocialConfirm();
 }
 
+// ============ VISI MISI ============
 function openVisiMisi(id) {
     document.getElementById(id).classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -307,6 +315,56 @@ function closeVisiMisi(id) {
     document.body.style.overflow = '';
 }
 
+// ============ CONTACT FORM (UPDATED) ============
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Mengirim...';
+            btn.disabled = true;
+            
+            // ✅ Menggunakan kredensial yang sudah didapat
+            emailjs.sendForm(EMAIL_CONFIG.serviceId, EMAIL_CONFIG.contactTemplateId, this)
+                .then(() => {
+                    showNotification('✅ Pesan berhasil dikirim! Kami akan segera membalas.', '#4caf50');
+                    form.reset();
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                })
+                .catch((error) => {
+                    console.error('EmailJS Error:', error);
+                    showNotification('❌ Gagal mengirim pesan. Silakan coba lagi.', '#f44336');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+        });
+    }
+}
+
+// ============ SOCIAL LINKS ============
+function initSocialLinks() {
+    const socialLinks = document.querySelectorAll('.social-link, .social-icon');
+    socialLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const url = link.getAttribute('data-url');
+            const platform = link.getAttribute('data-platform');
+            const title = link.getAttribute('data-title');
+            const desc = link.getAttribute('data-desc');
+            const color = link.getAttribute('data-color');
+            const emoji = link.getAttribute('data-emoji');
+            
+            if (url) {
+                openSocialConfirm(e, url, platform, title, desc, color, emoji);
+            }
+        });
+    });
+}
+
+// ============ NAVBAR ============
 function initNavbar() {
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
@@ -355,6 +413,7 @@ function initNavbar() {
     });
 }
 
+// ============ TYPING EFFECT ============
 function initTypingEffect() {
     const typingText = document.getElementById('typing-text');
     if (!typingText) return;
@@ -373,6 +432,7 @@ function initTypingEffect() {
     type();
 }
 
+// ============ SMOOTH SCROLL ============
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
@@ -389,51 +449,7 @@ function initSmoothScroll() {
     });
 }
 
-function initContactForm() {
-    const form = document.getElementById('contact-form');
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const btn = this.querySelector('button');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            btn.disabled = true;
-            
-            emailjs.sendForm("service_jtnlzjh", "template_1g0ebr8", this)
-                .then(() => {
-                    showNotification('✅ Pesan berhasil dikirim!', '#4caf50');
-                    form.reset();
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                })
-                .catch(() => {
-                    showNotification('❌ Gagal mengirim pesan', '#f44336');
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                });
-        });
-    }
-}
-
-function initSocialLinks() {
-    const socialLinks = document.querySelectorAll('.social-link, .social-icon');
-    socialLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const url = link.getAttribute('data-url');
-            const platform = link.getAttribute('data-platform');
-            const title = link.getAttribute('data-title');
-            const desc = link.getAttribute('data-desc');
-            const color = link.getAttribute('data-color');
-            const emoji = link.getAttribute('data-emoji');
-            
-            if (url) {
-                openSocialConfirm(e, url, platform, title, desc, color, emoji);
-            }
-        });
-    });
-}
-
+// ============ ANIMATIONS ============
 function initAOS() {
     if (typeof AOS !== 'undefined') {
         AOS.init({
@@ -480,70 +496,29 @@ function addAnimationStyles() {
             25% { transform: translateX(-5px); }
             75% { transform: translateX(5px); }
         }
-        
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        
         @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
         }
-        
         @keyframes slideOutRight {
-            from {
-                opacity: 1;
-                transform: translateX(0);
-            }
-            to {
-                opacity: 0;
-                transform: translateX(30px);
-            }
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(30px); }
         }
-        
-        @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
         @keyframes logoClick {
             0% { transform: scale(1); }
             50% { transform: scale(0.95); color: var(--accent); }
             100% { transform: scale(1); }
         }
-        
-        .admin-tooltip {
-            animation: fadeInUp 0.2s ease;
-            transition: opacity 0.3s ease;
-        }
-        
-        .admin-notification {
-            animation: slideInRight 0.3s ease;
-        }
-        
+        .admin-tooltip { animation: fadeInUp 0.2s ease; transition: opacity 0.3s ease; }
+        .admin-notification { animation: slideInRight 0.3s ease; }
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     `;
     document.head.appendChild(style);
@@ -585,6 +560,7 @@ function initPopupClose() {
     });
 }
 
+// ============ INITIALIZATION ============
 document.addEventListener('DOMContentLoaded', () => {
     loadEventsFromSheet();
     initNavbar();
@@ -597,6 +573,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkAdminSession();
     addAnimationStyles();
     initAdminLogoTrigger(); 
+    
     setTimeout(() => {
         initAOS();
     }, 100);
