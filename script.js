@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all features
     initNavbar();
     initTypingEffect();
-    initOrbitAnimations();
-    initSunPhotoModal();
     initSmoothScroll();
     initSectionAnimations();
+    initContactForm();
 });
 
 function initNavbar() {
@@ -13,15 +11,19 @@ function initNavbar() {
     const navMenu = document.getElementById('nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    }
 
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navMenu.classList.remove('active');
+            if (hamburger && navMenu) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
         });
     });
 
@@ -29,10 +31,7 @@ function initNavbar() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                
                 navLinks.forEach(link => link.classList.remove('active'));
-                
-                
                 const activeLink = document.querySelector(`a[href="#${entry.target.id}"]`);
                 if (activeLink) {
                     activeLink.classList.add('active');
@@ -41,7 +40,7 @@ function initNavbar() {
         });
     }, {
         threshold: 0.3,
-        rootMargin: '-100px 0px -100px 0px'
+        rootMargin: '-80px 0px -80px 0px'
     });
     
     sections.forEach(section => observer.observe(section));
@@ -49,99 +48,22 @@ function initNavbar() {
 
 function initTypingEffect() {
     const typingText = document.getElementById('typing-text');
-    const phrase = 'UNIWEEB';
+    if (!typingText) return;
     
+    const phrase = 'UNIWEEB';
     let currentCharIndex = 0;
     let typingSpeed = 100;
     
     function typeEffect() {
-        // Typing characters
         typingText.textContent = phrase.substring(0, currentCharIndex + 1);
         currentCharIndex++;
         
-        // Continue typing until complete
         if (currentCharIndex < phrase.length) {
             setTimeout(typeEffect, typingSpeed);
         }
-        // Stop after completion - no delete or loop
     }
 
     typeEffect();
-}
-
-
-
-function initOrbitAnimations() {
-    const planets = document.querySelectorAll('.random-orbit');
-
-    planets.forEach((planet, index) => {
-        const startAngle = Math.random() * 360;
-        const radius = 120 + (index * 40);
-
-        const duration = 15 + Math.random() * 15;
-        const direction = Math.random() > 0.5 ? 'normal' : 'reverse';
-        const delay = 0;
-
-        planet.style.transform = `rotate(${startAngle}deg) translateX(${radius}px) rotate(-${startAngle}deg)`;
-
-        const animationName = `orbit${index}`;
-        const keyframes = `
-            @keyframes ${animationName} {
-                from {
-                    transform: rotate(${startAngle}deg) translateX(${radius}px) rotate(-${startAngle}deg);
-                }
-                to {
-                    transform: rotate(${startAngle + 360}deg) translateX(${radius}px) rotate(-${startAngle + 360}deg);
-                }
-            }
-        `;
-
-        const styleSheet = document.createElement('style');
-        styleSheet.textContent = keyframes;
-        document.head.appendChild(styleSheet);
-
-        planet.style.animation = `${animationName} ${duration}s linear infinite ${direction}`;
-        planet.style.animationDelay = `${delay}s`;
-
-        planet.addEventListener('mouseenter', () => {
-            planet.style.animationPlayState = 'paused';
-        });
-
-        planet.addEventListener('mouseleave', () => {
-            planet.style.animationPlayState = 'running';
-        });
-    });
-}
-
-function initSunPhotoModal() {
-    const sun = document.querySelector('.sun-core');
-    const modal = document.getElementById('photo-modal');
-    const closeBtn = document.querySelector('.close');
-    const randomPhoto = document.getElementById('random-photo');
-
-    if (sun && modal && closeBtn && randomPhoto) {
-        sun.addEventListener('click', () => {
-            const randomId = Math.floor(Math.random() * 1000) + 1;
-            randomPhoto.src = `https://picsum.photos/600/400?random=${randomId}`;
-            modal.style.display = 'block';
-        });
-
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'block') {
-                modal.style.display = 'none';
-            }
-        });
-    }
 }
 
 function initSmoothScroll() {
@@ -149,12 +71,11 @@ function initSmoothScroll() {
 
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
-
             const targetId = this.getAttribute('href').substring(1);
             const targetElement = document.getElementById(targetId);
 
             if (targetElement) {
+                e.preventDefault();
                 const headerOffset = 80;
                 const elementPosition = targetElement.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -191,37 +112,6 @@ function initSectionAnimations() {
 
     elements.forEach(element => elementObserver.observe(element));
 
-    // VISI/MISI Button Toggle
-    const visiBtn = document.querySelector('.visi-btn');
-    const misiBtn = document.querySelector('.misi-btn');
-    const visiTable = document.querySelector('.visi-table');
-    const misiTable = document.querySelector('.misi-table');
-
-    if (visiBtn && visiTable) {
-        visiBtn.addEventListener('click', () => {
-            const isVisible = !visiTable.classList.contains('hidden');
-            visiTable.classList.toggle('hidden', isVisible);
-            visiBtn.classList.toggle('active', !isVisible);
-            if (!isVisible) {
-                misiTable.classList.add('hidden');
-                misiBtn.classList.remove('active');
-            }
-        });
-    }
-
-    if (misiBtn && misiTable) {
-        misiBtn.addEventListener('click', () => {
-            const isVisible = !misiTable.classList.contains('hidden');
-            misiTable.classList.toggle('hidden', isVisible);
-            misiBtn.classList.toggle('active', !isVisible);
-            if (!isVisible) {
-                visiTable.classList.add('hidden');
-                visiBtn.classList.remove('active');
-            }
-        });
-    }
-
-    // Mouse move spotlight effect
     const spotlightCards = document.querySelectorAll('.spotlight-card');
     spotlightCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
@@ -232,49 +122,21 @@ function initSectionAnimations() {
             card.style.setProperty('--mouse-y', `${y}px`);
         });
     });
-
-    (function() {
-  emailjs.init("sm08AnEPv9i2Vfjzu"); // ← ضع المفتاح العام من EmailJS
-})();
-
-document.getElementById("contact-form").addEventListener("submit", function(e) {
-  e.preventDefault();
-
-  emailjs.sendForm("service_jtnlzjh", "template_1g0ebr8", this)
-    .then(() => {
-      alert("Dn");
-    }, (error) => {
-      alert("Eror " + JSON.stringify(error));
-    });
-});
-
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Contact Form
+function initContactForm() {
     const form = document.getElementById('contact-form');
+    if (!form) return;
 
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        emailjs.sendForm(
-            "service_jtnlzjh",   // Service ID من EmailJS
-            "template_1g0ebr8",  // Template ID من EmailJS
-            this
-        ).then(
-            () => {
-                alert("✅ Message sent successfully!");
+        emailjs.sendForm("service_jtnlzjh", "template_1g0ebr8", this)
+            .then(() => {
+                alert("✅ Pesan berhasil dikirim!");
                 form.reset();
-            },
-            (error) => {
-                alert("❌ Failed to send message: " + error.text);
-            }
-        );
+            }, (error) => {
+                alert("❌ Gagal mengirim pesan: " + error.text);
+            });
     });
-});
-
-
-
-
-
-
+}
