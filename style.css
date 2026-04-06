@@ -69,11 +69,11 @@ body::after {
 }
 
 .section {
-    padding: 50px 0;
+    padding: 60px 0;
 }
 
 .section-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 700;
     text-align: center;
     margin-bottom: 50px;
@@ -84,19 +84,13 @@ body::after {
 .section-title::after {
     content: '';
     position: absolute;
-    bottom: -10px;
+    bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
-    width: 50px;
+    width: 60px;
     height: 3px;
     background: linear-gradient(90deg, var(--accent), var(--accent-2));
     border-radius: 2px;
-    animation: titleLine 0.8s ease-out;
-}
-
-@keyframes titleLine {
-    from { width: 0; opacity: 0; }
-    to { width: 50px; opacity: 1; }
 }
 
 #navbar {
@@ -120,7 +114,7 @@ body::after {
 }
 
 .logo {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--text);
     cursor: pointer;
@@ -140,7 +134,7 @@ body::after {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 20px;
+    gap: 25px;
 }
 
 .nav-link {
@@ -149,7 +143,7 @@ body::after {
     font-weight: 500;
     transition: all 0.3s ease;
     position: relative;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
 .nav-link.active,
@@ -175,18 +169,18 @@ body::after {
 
 .nav-social {
     display: flex;
-    gap: 12px;
+    gap: 15px;
 }
 
 .nav-social .social-icon {
     color: #888888;
     transition: all 0.3s ease;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .nav-social .social-icon:hover {
     color: white;
-    transform: translateY(-2px) scale(1.1);
+    transform: translateY(-2px);
 }
 
 .hamburger {
@@ -220,29 +214,32 @@ body::after {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 70px 0 40px;
+    padding: 80px 0 50px;
 }
 
 .hero-content {
     display: flex;
-    flex-direction: column;
-    gap: 40px;
+    flex-direction: row;
+    gap: 60px;
     align-items: center;
+    justify-content: space-between;
 }
 
 .hero-text {
-    text-align: center;
-    order: 2;
+    flex: 1;
+    text-align: left;
 }
 
 .hero-visual {
-    order: 1;
+    flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 .greeting {
     color: var(--muted);
-    font-size: 0.9rem;
-    margin-bottom: 12px;
+    font-size: 1rem;
+    margin-bottom: 15px;
 }
 
 .animate-greeting {
@@ -265,9 +262,9 @@ body::after {
 }
 
 .hero-title {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 15px;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
     line-height: 1.2;
 }
 
@@ -283,35 +280,45 @@ body::after {
 
 .hero-quote {
     color: var(--muted);
-    font-size: 0.9rem;
-    margin-bottom: 25px;
-    line-height: 1.6;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    line-height: 1.7;
 }
 
 .hero-social {
     display: flex;
-    gap: 12px;
+    gap: 15px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .hero-social .social-link {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(30, 5, 5, 0.7);
-    border: 1.5px solid rgba(220, 100, 100, 0.4);
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 40px;
+    background: rgba(30, 5, 5, 0.7);
+    border: 1.5px solid rgba(220, 100, 100, 0.4);
     color: rgba(255, 200, 200, 0.9);
     transition: all 0.3s ease;
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.hero-social .social-link i {
+    font-size: 1.1rem;
+}
+
+.hero-social .social-link:hover {
+    background: rgba(220, 80, 80, 0.6);
+    border-color: rgba(220, 80, 80, 0.8);
+    color: #fff;
+    transform: translateY(-2px);
 }
 
 .hero-social .social-link:active {
-    transform: scale(0.95);
+    transform: scale(0.98);
 }
 
 .hero-visual {
@@ -321,16 +328,16 @@ body::after {
 
 .avatar-container {
     position: relative;
-    width: 220px;
-    height: 220px;
+    width: 280px;
+    height: 280px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .sun-core {
-    width: 120px;
-    height: 120px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -379,29 +386,30 @@ body::after {
 }
 
 .about-desc p {
-    margin-bottom: 15px;
-    line-height: 1.7;
+    margin-bottom: 20px;
+    line-height: 1.8;
     color: var(--muted);
     text-align: justify;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .skills-container {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .skills h3 {
     color: var(--text);
-    margin-bottom: 20px;
-    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-size: 1.3rem;
     text-align: center;
+    font-weight: 600;
 }
 
 .visi-misi-grid {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 100%;
+    flex-direction: row;
+    gap: 30px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
@@ -409,10 +417,11 @@ body::after {
     background: linear-gradient(135deg, rgba(30, 10, 10, 0.8), rgba(20, 5, 5, 0.9));
     border: 1px solid rgba(220, 80, 80, 0.4);
     border-radius: 20px;
-    padding: 25px 20px;
+    padding: 30px 20px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex: 1;
 }
 
 .visi-misi-card:active {
@@ -420,14 +429,14 @@ body::after {
 }
 
 .visi-misi-card .card-icon {
-    font-size: 2rem;
-    margin-bottom: 12px;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
     color: var(--accent);
 }
 
 .visi-misi-card h3 {
-    font-size: 1.3rem;
-    margin-bottom: 8px;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
     background: linear-gradient(135deg, #fff, #ffaaaa);
     -webkit-background-clip: text;
     background-clip: text;
@@ -435,7 +444,7 @@ body::after {
 }
 
 .visi-misi-card p {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--muted);
 }
 
@@ -454,7 +463,7 @@ body::after {
 }
 
 .events-wrapper::-webkit-scrollbar-track {
-    background: rgba(220, 38, 38, 0.1);
+    background: transparent;
     border-radius: 10px;
 }
 
@@ -465,7 +474,7 @@ body::after {
 
 .projects-grid {
     display: flex;
-    gap: 16px;
+    gap: 20px;
     width: max-content;
     padding: 8px 4px 16px 4px;
 }
@@ -540,16 +549,24 @@ body::after {
 
 .contact-content {
     display: flex;
-    flex-direction: column;
-    gap: 40px;
-    margin-top: 30px;
+    flex-direction: row;
+    gap: 60px;
+    margin-top: 40px;
+}
+
+.contact-info {
+    flex: 1;
+}
+
+.contact-form {
+    flex: 1;
 }
 
 .contact-info p {
     color: var(--muted);
     margin-bottom: 25px;
     line-height: 1.7;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
 .contact-details {
@@ -562,8 +579,7 @@ body::after {
     gap: 12px;
     margin-bottom: 15px;
     color: var(--muted);
-    font-size: 0.85rem;
-    flex-wrap: wrap;
+    font-size: 0.9rem;
 }
 
 .contact-item i {
@@ -595,18 +611,18 @@ body::after {
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 56, 56, 0.2);
     border-radius: 16px;
-    padding: 20px;
+    padding: 25px;
     backdrop-filter: blur(10px);
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 12px;
+    padding: 12px 15px;
     background: rgba(0, 0, 0, 0.5);
     border: 1px solid rgba(255, 56, 56, 0.3);
     border-radius: 10px;
@@ -697,273 +713,4 @@ body::after {
     width: 100%;
     padding: 12px;
     margin-bottom: 15px;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(220, 38, 38, 0.3);
-    border-radius: 10px;
-    color: #fff;
-}
-
-.admin-box input:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 10px rgba(255, 56, 56, 0.3);
-}
-
-.admin-box button {
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-right: 10px;
-    transition: all 0.3s ease;
-}
-
-.admin-box button:hover {
-    background: #ef4444;
-}
-
-.admin-box .close-admin {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.admin-info {
-    background: rgba(220, 38, 38, 0.1);
-    padding: 12px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-}
-
-.admin-info p {
-    font-size: 0.8rem;
-    margin-bottom: 5px;
-}
-
-.google-sheets-btn {
-    display: inline-block;
-    background: #1565C0;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 10px;
-    text-decoration: none;
-    margin-bottom: 20px;
-    width: 100%;
-    text-align: center;
-    font-size: 0.85rem;
-}
-
-.event-list-item {
-    background: rgba(220, 38, 38, 0.1);
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.visimisi-close {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.4);
-    color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    border: none;
-}
-
-.visimisi-badge {
-    display: inline-block;
-    padding: 3px 14px;
-    border-radius: 40px;
-    font-size: 0.7rem;
-    font-weight: 800;
-    margin-bottom: 12px;
-}
-
-.visi-badge {
-    background: rgba(220, 38, 38, 0.2);
-    color: #ef4444;
-}
-
-.misi-badge {
-    background: rgba(234, 179, 8, 0.2);
-    color: #eab308;
-}
-
-.visimisi-divider {
-    width: 40px;
-    height: 3px;
-    margin-bottom: 15px;
-    background: linear-gradient(90deg, #dc2626, transparent);
-}
-
-.misi-divider {
-    background: linear-gradient(90deg, #eab308, transparent);
-}
-
-.visimisi-box h2 {
-    color: #fff;
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-}
-
-.visimisi-box .content-text ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.visimisi-box .content-text li {
-    margin-bottom: 12px;
-    padding-left: 25px;
-    position: relative;
-    font-size: 0.85rem;
-}
-
-.visimisi-box .content-text li::before {
-    content: "✨";
-    position: absolute;
-    left: 0;
-}
-
-.confirm-btn-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.btn-cancel {
-    flex: 1;
-    padding: 10px;
-    border-radius: 40px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    cursor: pointer;
-    border: none;
-}
-
-.btn-confirm {
-    flex: 1;
-    padding: 10px;
-    border-radius: 40px;
-    background: #dc2626;
-    color: #fff;
-    cursor: pointer;
-    border: none;
-}
-
-.social-confirm-icon {
-    font-size: 40px;
-    margin-bottom: 12px;
-}
-
-.admin-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(220, 38, 38, 0.8);
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-size: 22px;
-    z-index: 100;
-    transition: all 0.3s ease;
-}
-
-.back-to-top {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(220, 38, 38, 0.5);
-    color: var(--accent);
-    cursor: pointer;
-    font-size: 18px;
-    z-index: 100;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.back-to-top.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-.admin-hint {
-    font-size: 0.7rem;
-    color: var(--muted);
-    margin-bottom: 12px;
-    text-align: center;
-    background: rgba(255, 56, 56, 0.1);
-    padding: 6px;
-    border-radius: 8px;
-}
-
-.logo-click-effect {
-    animation: logoClick 0.3s ease-out;
-}
-
-@keyframes logoClick {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); color: var(--accent); }
-    100% { transform: scale(1); }
-}
-
-@keyframes slideInRight {
-    from { opacity: 0; transform: translateX(30px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-@media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        top: 54px;
-        left: -100%;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.95);
-        flex-direction: column;
-        padding: 20px;
-        transition: left 0.3s ease;
-        gap: 15px;
-        text-align: center;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .hamburger {
-        display: flex;
-    }
-    
-    .nav-social {
-        display: none;
-    }
-    
-    .hero-title {
-        font-size: 1.8rem;
-    }
-    
-    .visi-misi-card {
-        padding: 20px 15px;
-    }
-    
-    .project-card {
-        width: 240px;
-    }
-}
+    background: rgba(0, 0, 0, 0.
