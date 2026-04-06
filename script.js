@@ -161,18 +161,9 @@ function updateEventCount() {
 
 function closeWithAnimation(el, callback) {
     if (!el) return;
-    const box = el.querySelector('.animate-popup');
-    if (box) {
-        box.style.animation = 'popupOut 0.2s ease forwards';
-    }
-    el.style.animation = 'overlayFadeOut 0.2s ease forwards';
-    setTimeout(() => {
-        el.classList.remove('active');
-        el.style.animation = '';
-        if (box) box.style.animation = '';
-        document.body.style.overflow = '';
-        if (callback) callback();
-    }, 200);
+    el.classList.remove('active');
+    document.body.style.overflow = '';
+    if (callback) callback();
 }
 
 function openAdminModal() {
