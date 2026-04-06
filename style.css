@@ -22,7 +22,7 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-    background: var(--bg-1);
+    background: #3d0000;
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
@@ -37,7 +37,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #1a0000 0%, #3d0000 40%, #1a0000 70%, #0d0000 100%);
+    background: radial-gradient(ellipse at top left, #5a0000 0%, #2a0000 50%, #1a0000 100%);
     z-index: -2;
 }
 
@@ -709,47 +709,33 @@ body::after {
 .social-confirm-overlay,
 .visimisi-overlay,
 .admin-modal {
-    display: none;
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(8px);
     z-index: 9999;
+    display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
 .social-confirm-overlay.active,
 .visimisi-overlay.active,
 .admin-modal.active {
-    display: flex;
-    animation: overlayFadeIn 0.25s ease forwards;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
 }
 
-@keyframes overlayFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-@keyframes overlayFadeOut {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
-
-/* animate-popup — simple fade in */
-.animate-popup {
-    animation: popupFadeIn 0.25s ease forwards;
-}
-
-@keyframes popupFadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-@keyframes popupOut {
-    from { opacity: 1; }
-    to   { opacity: 0; }
-}
+@keyframes overlayFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes overlayFadeOut { from { opacity: 1; } to { opacity: 0; } }
+.animate-popup {}
+@keyframes popupFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popupOut { from { opacity: 1; } to { opacity: 0; } }
 
 .social-confirm-box,
 .visimisi-box,
