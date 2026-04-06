@@ -28,16 +28,8 @@ body {
     overflow-x: hidden;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at top, var(--bg-2) 0%, var(--bg-1) 100%);
-    z-index: -2;
-}
+/* body::before now defined in the stars section above */
+
 
 body::after {
     content: '';
@@ -46,20 +38,55 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(2px 2px at 20px 30px, var(--accent), transparent),
-                radial-gradient(2px 2px at 40px 70px, var(--accent-2), transparent),
-                radial-gradient(1px 1px at 90px 40px, var(--accent), transparent);
+    background:
+        radial-gradient(1.5px 1.5px at 10px 20px, rgba(255,56,56,0.9), transparent),
+        radial-gradient(1px 1px at 50px 80px, rgba(255,100,100,0.7), transparent),
+        radial-gradient(2px 2px at 90px 35px, rgba(255,56,56,0.6), transparent),
+        radial-gradient(1px 1px at 130px 60px, rgba(255,180,180,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 170px 15px, rgba(255,56,56,0.8), transparent),
+        radial-gradient(1px 1px at 30px 110px, rgba(255,120,120,0.4), transparent),
+        radial-gradient(2px 2px at 110px 95px, rgba(255,56,56,0.5), transparent),
+        radial-gradient(1px 1px at 70px 140px, rgba(255,200,200,0.3), transparent),
+        radial-gradient(1.5px 1.5px at 150px 130px, rgba(255,56,56,0.6), transparent),
+        radial-gradient(1px 1px at 190px 75px, rgba(255,80,80,0.5), transparent);
     background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: stars 20s linear infinite;
-    opacity: 0.3;
+    background-size: 200px 160px;
+    animation: stars 25s linear infinite, starsTwinkle 4s ease-in-out infinite alternate;
+    opacity: 0.4;
     z-index: -1;
     pointer-events: none;
 }
 
 @keyframes stars {
     from { transform: translateY(0px); }
-    to { transform: translateY(-100px); }
+    to   { transform: translateY(-160px); }
+}
+
+@keyframes starsTwinkle {
+    0%   { opacity: 0.25; }
+    50%  { opacity: 0.5; }
+    100% { opacity: 0.3; }
+}
+
+/* Floating orbs background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(ellipse 600px 400px at 20% 20%, rgba(87,0,0,0.6) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 300px at 80% 70%, rgba(120,0,0,0.4) 0%, transparent 70%),
+        radial-gradient(ellipse 300px 300px at 50% 50%, rgba(0,0,0,0.8) 0%, transparent 100%);
+    z-index: -2;
+    animation: orbFloat 12s ease-in-out infinite alternate;
+}
+
+@keyframes orbFloat {
+    0%   { background-position: 0% 0%, 100% 100%, 50% 50%; }
+    100% { background-position: 5% 8%, 95% 92%, 52% 48%; }
 }
 
 .container {
@@ -420,8 +447,19 @@ body::after {
     padding: 30px 20px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease,
+                background 0.35s ease;
     flex: 1;
+}
+
+.visi-misi-card:hover,
+.animate-hover:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 30px rgba(220, 38, 38, 0.3);
+    border-color: rgba(220, 80, 80, 0.8);
+    background: linear-gradient(135deg, rgba(50, 15, 15, 0.9), rgba(30, 8, 8, 0.95));
 }
 
 .visi-misi-card:active {
@@ -486,7 +524,21 @@ body::after {
     overflow: hidden;
     background: rgba(26, 8, 8, 0.85);
     border: 1px solid rgba(220, 38, 38, 0.25);
-    transition: all 0.3s ease;
+    transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1),
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+    cursor: pointer;
+}
+
+.project-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(220, 38, 38, 0.35),
+                0 0 0 1px rgba(220, 38, 38, 0.5);
+    border-color: rgba(220, 38, 38, 0.7);
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.08);
 }
 
 .project-card:active {
@@ -671,17 +723,46 @@ body::after {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
     z-index: 9999;
     align-items: center;
     justify-content: center;
+    transition: background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
 .social-confirm-overlay.active,
 .visimisi-overlay.active,
 .admin-modal.active {
     display: flex;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    animation: overlayFadeIn 0.25s ease forwards;
+}
+
+@keyframes overlayFadeIn {
+    from { background: rgba(0,0,0,0); backdrop-filter: blur(0px); }
+    to   { background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+}
+
+/* animate-popup — box slides up + scales in */
+.animate-popup {
+    animation: popupIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popupIn {
+    0%   { opacity: 0; transform: scale(0.85) translateY(30px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes popupOut {
+    0%   { opacity: 1; transform: scale(1) translateY(0); }
+    100% { opacity: 0; transform: scale(0.9) translateY(20px); }
+}
+
+@keyframes overlayFadeOut {
+    from { background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+    to   { background: rgba(0,0,0,0); backdrop-filter: blur(0px); }
 }
 
 .social-confirm-box,
