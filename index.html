@@ -2,11 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIWEEB | Official Website - Komunitas Jejepangan Bandung</title>
-    <meta name="description" content="UNIWEEB - Komunitas budaya Jepang di Bandung, Jawa Barat. Event anime, cosplay, dan kegiatan seru lainnya.">
-    <meta name="keywords" content="UNIWEEB, komunitas anime, wibu bandung, event anime, cosplay">
-    <meta name="author" content="UNIWEEB">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>UNIWEEB | Official Website</title>
     <link rel="icon" type="image/jpeg" href="LAMBANG%20UNIWEEB/UNIWEEB%20LOGO.jpg">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -14,275 +11,232 @@
 </head>
 <body>
 
-    <div class="social-confirm-overlay" id="socialConfirmOverlay">
-        <div class="social-confirm-box">
-            <div class="social-confirm-icon" id="confirmIcon">🔗</div>
-            <h3 id="confirmTitle">Buka Link?</h3>
-            <p id="confirmDesc">Kamu akan diarahkan ke halaman eksternal.</p>
-            <div class="confirm-btn-group">
-                <button class="btn-cancel" onclick="closeSocialConfirm()">Batal</button>
-                <button class="btn-confirm" id="confirmBtn" onclick="proceedSocialLink()">Buka Sekarang</button>
-            </div>
+<div class="social-confirm-overlay" id="socialConfirmOverlay">
+    <div class="social-confirm-box">
+        <div class="social-confirm-icon" id="confirmIcon">🔗</div>
+        <h3 id="confirmTitle">Buka Link?</h3>
+        <p id="confirmDesc">Kamu akan diarahkan ke halaman eksternal.</p>
+        <div class="confirm-btn-group">
+            <button class="btn-cancel" onclick="closeSocialConfirm()">Batal</button>
+            <button class="btn-confirm" id="confirmBtn" onclick="proceedSocialLink()">Buka Sekarang</button>
         </div>
     </div>
+</div>
 
-    <div class="visimisi-overlay" id="visiOverlay">
-        <div class="visimisi-box animate-popup">
-            <button class="visimisi-close" onclick="closeVisiMisi('visiOverlay')">✕</button>
-            <span class="visimisi-badge visi-badge">VISI</span>
-            <div class="visimisi-divider"></div>
-            <h2>Visi UNIWEEB</h2>
-            <div class="content-text">
-                <p>Menjadikan komunitas Uniweeb sebagai organisasi yang bergerak dalam bidang budaya jejepangan yang terstruktur dan memiliki kesan positif sehingga menjadi komunitas besar di Jawa Barat.</p>
-            </div>
+<div class="visimisi-overlay" id="visiOverlay">
+    <div class="visimisi-box animate-popup">
+        <button class="visimisi-close" onclick="closeVisiMisi('visiOverlay')">✕</button>
+        <span class="visimisi-badge visi-badge">VISI</span>
+        <div class="visimisi-divider"></div>
+        <h2>Visi UNIWEEB</h2>
+        <div class="content-text">
+            <p>Menjadikan komunitas Uniweeb sebagai organisasi yang bergerak dalam bidang budaya jejepangan yang terstruktur dan memiliki kesan positif sehingga menjadi komunitas besar di Jawa Barat.</p>
         </div>
     </div>
+</div>
 
-    <div class="visimisi-overlay" id="misiOverlay">
-        <div class="visimisi-box animate-popup">
-            <button class="visimisi-close" onclick="closeVisiMisi('misiOverlay')">✕</button>
-            <span class="visimisi-badge misi-badge">MISI</span>
-            <div class="visimisi-divider misi-divider"></div>
-            <h2>Misi UNIWEEB</h2>
-            <div class="content-text">
-                <ul>
-                    <li>Menciptakan komunitas positif yang bermanfaat bagi anggota maupun non anggota.</li>
-                    <li>Menyatukan pendapat dan pikiran antar anggota agar terwujud keselarasan dalam setiap kegiatan.</li>
-                    <li>Menjalin hubungan kerja sama yang menguntungkan antar organisasi dan komunitas lainnya.</li>
-                    <li>Menjadi wadah penampung ide maupun gagasan dari anggota.</li>
-                    <li>Berperan aktif dalam menyelenggarakan atau berpartisipasi dalam event jejepangan.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="admin-modal" id="adminModal">
-        <div class="admin-box animate-popup">
-            <h3><i class="fas fa-lock"></i> Admin Login</h3>
-            <p class="admin-hint">🔒 Klik logo UNIWEEB 3x untuk akses cepat</p>
-            <input type="password" id="adminPassword" placeholder="Password Admin" autocomplete="off">
-            <button onclick="adminLogin()" class="admin-login-btn">Login</button>
-            <button class="close-admin" onclick="closeAdminModal()">Batal</button>
-        </div>
-    </div>
-
-    <div class="admin-modal" id="adminDashboard">
-        <div class="admin-box dashboard-box animate-popup">
-            <h3><i class="fas fa-chalkboard-teacher"></i> Dashboard Admin</h3>
-            <div class="admin-info">
-                <p><i class="fas fa-info-circle"></i> <strong>Cara Mengelola Event:</strong></p>
-                <p>1. Buka Google Sheets di bawah<br>2. Edit/tambah/hapus data event<br>3. Refresh halaman untuk melihat perubahan</p>
-                <p><i class="fas fa-sync-alt"></i> <strong>Auto-refresh:</strong> Data event akan otomatis update setiap 30 detik</p>
-            </div>
-            <a href="https://docs.google.com/spreadsheets/d/13bcBa6-abMonsrmRY6axaJHqUwjROxumSdlDoqIS4m4/edit?usp=sharing" target="_blank" class="google-sheets-btn">
-                <i class="fas fa-table"></i> Buka Google Sheets
-            </a>
-            <h4><i class="fas fa-calendar-alt"></i> Daftar Event Saat Ini (<span id="eventCount">0</span>):</h4>
-            <div id="eventList"></div>
-            <button class="close-admin logout-btn" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Logout</button>
-        </div>
-    </div>
-
-    <header id="navbar">
-        <nav class="nav-container">
-            <div class="logo" id="adminLogoTrigger">
-                <span class="logo-accent">UNIWEEB</span>
-                <span class="logo-tooltip">✨</span>
-            </div>
-            <ul class="nav-menu" id="nav-menu">
-                <li><a href="#home" class="nav-link active">Home</a></li>
-                <li><a href="#about" class="nav-link">About U.</a></li>
-                <li><a href="#events" class="nav-link">Event Anime</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
+<div class="visimisi-overlay" id="misiOverlay">
+    <div class="visimisi-box animate-popup">
+        <button class="visimisi-close" onclick="closeVisiMisi('misiOverlay')">✕</button>
+        <span class="visimisi-badge misi-badge">MISI</span>
+        <div class="visimisi-divider misi-divider"></div>
+        <h2>Misi UNIWEEB</h2>
+        <div class="content-text">
+            <ul>
+                <li>Menciptakan komunitas positif yang bermanfaat bagi anggota maupun non anggota.</li>
+                <li>Menyatukan pendapat dan pikiran antar anggota agar terwujud keselarasan dalam setiap kegiatan.</li>
+                <li>Menjalin hubungan kerja sama yang menguntungkan antar organisasi dan komunitas lainnya.</li>
+                <li>Menjadi wadah penampung ide maupun gagasan dari anggota.</li>
+                <li>Berperan aktif dalam menyelenggarakan atau berpartisipasi dalam event jejepangan.</li>
             </ul>
-            <div class="nav-social">
-                <a href="#" class="social-icon" data-url="https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1" data-platform="Google Drive" data-title="Buka Google Drive?" data-desc="Kamu akan diarahkan ke Google Drive UNIWEEB." data-color="#1565C0" data-emoji="📁">
-                    <i class="fab fa-google-drive"></i>
-                </a>
-                <a href="#" class="social-icon" data-url="https://www.instagram.com/uniweeb_" data-platform="Instagram" data-title="Buka Instagram?" data-desc="Kamu akan diarahkan ke Instagram @uniweeb_." data-color="#C2185B" data-emoji="📸">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="social-icon" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span></span><span></span><span></span>
-            </div>
-        </nav>
-    </header>
+        </div>
+    </div>
+</div>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="hero-text" data-aos="fade-right" data-aos-duration="1000">
-                        <p class="greeting animate-greeting">
-                            <i class="fas fa-star"></i> Hello, Welcome To Official Website <i class="fas fa-star"></i>
-                        </p>
-                        <h1 class="hero-title"><span id="typing-text">UNIWEEB</span><span class="cursor">|</span></h1>
-                        <p class="hero-quote animate-quote">Halo, User! Kehadiranmu membawa seribu warna pelangi di hariku! Jangan ragu untuk menetap, karena di sini keramahan mengalir sederas air terjun. Mari berteman sampai dunia lupa caranya berputar!</p>
-                        <div class="hero-social">
-                            <a href="#" class="social-link" data-url="https://discord.com/invite/EC77KPU9TE" data-platform="Discord" data-title="Buka Discord?" data-desc="Kamu akan bergabung ke server Discord UNIWEEB." data-color="#5865F2" data-emoji="🎮">
-                                <i class="fab fa-discord"></i>
-                                <span>Discord</span>
-                            </a>
-                            <a href="#" class="social-link" data-url="https://www.instagram.com/uniweeb_" data-platform="Instagram" data-title="Buka Instagram?" data-desc="Kamu akan diarahkan ke Instagram @uniweeb_." data-color="#C2185B" data-emoji="📸">
-                                <i class="fab fa-instagram"></i>
-                                <span>Instagram</span>
-                            </a>
-                            <a href="#" class="social-link" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬">
-                                <i class="fab fa-whatsapp"></i>
-                                <span>WhatsApp</span>
-                            </a>
-                            <a href="#" class="social-link" data-url="https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1" data-platform="Google Drive" data-title="Buka Google Drive?" data-desc="Kamu akan diarahkan ke Google Drive UNIWEEB." data-color="#1565C0" data-emoji="📁">
-                                <i class="fab fa-google-drive"></i>
-                                <span>Drive</span>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="hero-visual" data-aos="fade-left" data-aos-duration="1000">
-                        <div class="avatar-container">
-                            <div class="sun-core animate-pulse-glow">
-                                <img src="LAMBANG%20UNIWEEB/UNIWEEB%20LOGO.jpg" alt="UNIWEEB Logo">
-                            </div>
-                            <div class="orbiting-circle"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="admin-modal" id="adminModal">
+    <div class="admin-box animate-popup">
+        <h3><i class="fas fa-lock"></i> Admin Login</h3>
+        <p class="admin-hint">🔒 Klik logo UNIWEEB 3x untuk akses cepat</p>
+        <input type="password" id="adminPassword" placeholder="Password Admin">
+        <button onclick="adminLogin()" class="admin-login-btn">Login</button>
+        <button class="close-admin" onclick="closeAdminModal()">Batal</button>
+    </div>
+</div>
 
-        <section id="about" class="section">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">About Universal</h2>
-                <div class="about-content">
-                    <div class="about-left">
-                        <div class="about-desc" data-aos="fade-up" data-aos-delay="100">
-                            <p>UNIWEEB dibuat pada tanggal 23 Februari 2025, berawal dari sebuah grup biasa yang dibuat hanya untuk sekedar jadi grup janjian bernama "WEABOO akut", dimana grup tersebut didirikan dengan maksud agar lebih mudah berkomunikasi dengan teman mahasiswa yang memiliki hobi serupa dalam bidang jejepangan, lalu terbesitlah ide untuk membuat sebuah komunitas jejepangan, dan diberi nama "UNIWEEB".</p>
-                            <p>"UNI" yang bisa bermaksud UNIVERSAL dan "WEEB" yang merujuk pada grup sebelumnya "WEEBOO akut" dan diambil kata pertama "wibu" lalu diambillah kata "WEEB" yang akhirnya membentuk nama UNIWEEB dengan Admin Pertamanya <strong>Valdi Nathaniel & Alif Muhamad Ramdan</strong> dengan jumlah 12 anggota.</p>
-                        </div>
-                        <div class="skills-container" data-aos="fade-up" data-aos-delay="200">
-                            <div class="skills">
-                                <h3><i class="fas fa-star"></i> Adapun Visi dan Misi yang kami naungi</h3>
-                            </div>
-                            <div class="visi-misi-grid">
-                                <div class="visi-misi-card animate-hover" onclick="openVisiMisi('visiOverlay')">
-                                    <div class="card-icon"><i class="fas fa-eye"></i></div>
-                                    <h3>VISI</h3>
-                                    <p>Klik untuk melihat visi komunitas kami</p>
-                                </div>
-                                <div class="visi-misi-card animate-hover" onclick="openVisiMisi('misiOverlay')">
-                                    <div class="card-icon"><i class="fas fa-bullseye"></i></div>
-                                    <h3>MISI</h3>
-                                    <p>Klik untuk melihat misi komunitas kami</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="admin-modal" id="adminDashboard">
+    <div class="admin-box dashboard-box animate-popup">
+        <h3><i class="fas fa-chalkboard-teacher"></i> Dashboard Admin</h3>
+        <div class="admin-info">
+            <p><i class="fas fa-info-circle"></i> <strong>Cara Mengelola Event:</strong></p>
+            <p>1. Buka Google Sheets di bawah<br>2. Edit/tambah/hapus data event<br>3. Refresh halaman untuk melihat perubahan</p>
+        </div>
+        <a href="https://docs.google.com/spreadsheets/d/13bcBa6-abMonsrmRY6axaJHqUwjROxumSdlDoqIS4m4/edit?usp=sharing" target="_blank" class="google-sheets-btn">
+            <i class="fas fa-table"></i> Buka Google Sheets
+        </a>
+        <h4><i class="fas fa-calendar-alt"></i> Daftar Event Saat Ini (<span id="eventCount">0</span>):</h4>
+        <div id="eventList"></div>
+        <button class="close-admin logout-btn" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+</div>
 
-        <section id="events" class="section">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Event Anime</h2>
-                <div class="events-wrapper" data-aos="fade-up" data-aos-delay="100">
-                    <div class="projects-grid" id="eventsContainer">
-                        <div class="loading">
-                            <i class="fas fa-spinner fa-spin"></i> Loading events...
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <section id="contact" class="section">
-            <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Kontak Kami</h2>
-                <div class="contact-content">
-                    <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
-                        <p>Tentunya! Agar informasinya sesuai dengan kebutuhanmu, ada beberapa jenis kontak yang sudah dibuat. Pilih format di bawah ini yang paling cocok dengan kebutuhanmu, lalu kamu tinggal isi datanya!</p>
-                        <div class="contact-details">
-                            <div class="contact-item">
-                                <i class="fas fa-envelope"></i>
-                                <span>uniweebofficial@gmail.com</span>
-                                <button class="copy-btn" onclick="copyToClipboard('uniweebofficial@gmail.com')">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-phone-alt"></i>
-                                <span>0895-8039-92277</span>
-                                <button class="copy-btn" onclick="copyToClipboard('0895803992277')">
-                                    <i class="fas fa-copy"></i>
-                                </button>
-                            </div>
-                            <div class="contact-item">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <span>Kab. Bandung, Jawa Barat, Indonesia</span>
-                            </div>
-                            <a href="#" class="social-link contact-wa" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬">
-                                <i class="fab fa-whatsapp"></i> Join WhatsApp Group
-                            </a>
-                        </div>
-                    </div>
-                    <div class="contact-form" data-aos="fade-left" data-aos-delay="100">
-                        <form id="contact-form">
-                            <div class="form-group">
-                                <input type="text" placeholder="Nama Lengkap" required name="user_name">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" placeholder="Email Aktif" required name="user_email">
-                            </div>
-                            <div class="form-group">
-                                <textarea name="message" placeholder="Pesan atau Pertanyaan" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="glow-genz-button">
-                                <i class="fas fa-paper-plane"></i> Kirim Pesan
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
+<header id="navbar">
+    <nav class="nav-container">
+        <div class="logo" id="adminLogoTrigger">
+            <span class="logo-accent">UNIWEEB</span>
+        </div>
+        <ul class="nav-menu" id="nav-menu">
+            <li><a href="#home" class="nav-link active">Home</a></li>
+            <li><a href="#about" class="nav-link">About U.</a></li>
+            <li><a href="#events" class="nav-link">Event Anime</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+        <div class="nav-social">
+            <a href="#" class="social-icon" data-url="https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1" data-platform="Google Drive" data-title="Buka Google Drive?" data-desc="Kamu akan diarahkan ke Google Drive UNIWEEB." data-color="#1565C0" data-emoji="📁">
+                <i class="fab fa-google-drive"></i>
+            </a>
+            <a href="#" class="social-icon" data-url="https://www.instagram.com/uniweeb_" data-platform="Instagram" data-title="Buka Instagram?" data-desc="Kamu akan diarahkan ke Instagram @uniweeb_." data-color="#C2185B" data-emoji="📸">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-icon" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+</header>
 
-    <footer class="footer">
+<main>
+    <section id="home" class="hero">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>UNIWEEB</h3>
-                    <p>Komunitas Budaya Jepang</p>
+            <div class="hero-content">
+                <div class="hero-text" data-aos="fade-right" data-aos-duration="1000">
+                    <p class="greeting animate-greeting">Hello, Welcome To Official Website</p>
+                    <h1 class="hero-title"><span id="typing-text">UNIWEEB</span><span class="cursor">|</span></h1>
+                    <p class="hero-quote animate-quote">Halo, User! Kehadiranmu membawa seribu warna pelangi di hariku! Jangan ragu untuk menetap, karena di sini keramahan mengalir sederas air terjun. Mari berteman sampai dunia lupa caranya berputar!</p>
+                    <div class="hero-social">
+                        <a href="#" class="social-link" data-url="https://discord.com/invite/EC77KPU9TE" data-platform="Discord" data-title="Buka Discord?" data-desc="Kamu akan bergabung ke server Discord UNIWEEB." data-color="#5865F2" data-emoji="🎮">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="social-link" data-url="https://www.instagram.com/uniweeb_" data-platform="Instagram" data-title="Buka Instagram?" data-desc="Kamu akan diarahkan ke Instagram @uniweeb_." data-color="#C2185B" data-emoji="📸">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="social-link" data-url="https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1" data-platform="Google Drive" data-title="Buka Google Drive?" data-desc="Kamu akan diarahkan ke Google Drive UNIWEEB." data-color="#1565C0" data-emoji="📁">
+                            <i class="fab fa-google-drive"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="footer-links">
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#events">Events</a>
-                    <a href="#contact">Contact</a>
+                <div class="hero-visual" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="avatar-container">
+                        <div class="sun-core animate-pulse-glow">
+                            <img src="LAMBANG%20UNIWEEB/UNIWEEB%20LOGO.jpg" alt="UNIWEEB Logo">
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-social">
-                    <a href="#" data-url="https://www.instagram.com/uniweeb_" data-platform="Instagram" data-title="Buka Instagram?" data-desc="Kamu akan diarahkan ke Instagram @uniweeb_." data-color="#C2185B" data-emoji="📸"><i class="fab fa-instagram"></i></a>
-                    <a href="#" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" data-url="https://discord.com/invite/EC77KPU9TE" data-platform="Discord" data-title="Buka Discord?" data-desc="Kamu akan bergabung ke server Discord UNIWEEB." data-color="#5865F2" data-emoji="🎮"><i class="fab fa-discord"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 UNIWEEB. All rights reserved. | Dibuat dengan <i class="fas fa-heart"></i> untuk komunitas</p>
             </div>
         </div>
-    </footer>
+    </section>
 
-    <button class="admin-btn" id="adminBtn" style="display: none;" onclick="openAdminModal()">
-        <i class="fas fa-tools"></i>
-    </button>
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">About Universal</h2>
+            <div class="about-content">
+                <div class="about-left">
+                    <div class="about-desc" data-aos="fade-up" data-aos-delay="100">
+                        <p>UNIWEEB dibuat pada tanggal 23 februari 2025, berawal dari sebuah grup biasa yang dibuat hanya untuk sekedar jadi grup janjian bernama "WEABOO akut", dimana grup tersebut didirikan dengan maksud agar lebih mudah berkomunikasi dengan teman mahasiswa yang memiliki hobi serupa dalam bidang jejepangan, lalu terbesitlah ide untuk membuat sebuah komunitas jejepangan, dan diberi nama "UNIWEEB", "UNI" yang bisa bermaksud UNIVERSAL dan "WEEB" yang merujuk pada grup sebelumnya "WEEBOO akut" dan diambil kata pertama "wibu" lalu Diambil lah kata "WEEB" yang akhirnya membentuk nama UNIWEEB dengan Admin Pertamanya "Valdi Nathaniel & Alif Muhamad Ramdan" dengan jumlah 12 anggota.</p>
+                    </div>
+                    <div class="skills-container" data-aos="fade-up" data-aos-delay="200">
+                        <div class="skills">
+                            <h3><i class="fas fa-star"></i> Adapun Visi dan Misi yang kami naungi</h3>
+                        </div>
+                        <div class="visi-misi-grid">
+                            <div class="visi-misi-card animate-hover" onclick="openVisiMisi('visiOverlay')">
+                                <div class="card-icon"><i class="fas fa-eye"></i></div>
+                                <h3>VISI</h3>
+                                <p>Klik untuk melihat visi komunitas kami</p>
+                            </div>
+                            <div class="visi-misi-card animate-hover" onclick="openVisiMisi('misiOverlay')">
+                                <div class="card-icon"><i class="fas fa-bullseye"></i></div>
+                                <h3>MISI</h3>
+                                <p>Klik untuk melihat misi komunitas kami</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <button class="back-to-top" id="backToTop">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <section id="events" class="section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Event Anime</h2>
+            <div class="events-wrapper" data-aos="fade-up" data-aos-delay="100">
+                <div class="projects-grid" id="eventsContainer">
+                    <div class="loading">Loading events...</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="script.js"></script>
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Kontak kami jika Kalian membutuhkannya!!!</h2>
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
+                    <p>Tentunya! Agar informasinya sesuai dengan kebutuhanmu, ada beberapa jenis kontak yang sudah dibuat. Pilih format di bawah ini yang paling cocok dengan kebutuhanmu, lalu kamu tinggal isi datanya!</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>uniweebofficial@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <span>0895803992277</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kab. Bandung, Jawa Barat, Indonesia</span>
+                        </div>
+                        <a href="#" class="social-link contact-wa" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬">
+                            <i class="fab fa-whatsapp"></i> Join WhatsApp Group
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form" data-aos="fade-left" data-aos-delay="100">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your Name" required name="user_name">
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Your Email" required name="user_email">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="glow-genz-button">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<button class="admin-btn" id="adminBtn" style="display: none;" onclick="openAdminModal()">
+    <i class="fas fa-tools"></i>
+</button>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
