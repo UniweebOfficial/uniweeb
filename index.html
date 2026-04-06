@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIWEEB | Official Website</title>
+    <title>UNIWEEB | Official Website - Komunitas Jejepangan Bandung</title>
+    <meta name="description" content="UNIWEEB - Komunitas budaya Jepang di Bandung, Jawa Barat. Event anime, cosplay, dan kegiatan seru lainnya.">
+    <meta name="keywords" content="UNIWEEB, komunitas anime, wibu bandung, event anime, cosplay">
+    <meta name="author" content="UNIWEEB">
     <link rel="icon" type="image/jpeg" href="LAMBANG%20UNIWEEB/UNIWEEB%20LOGO.jpg">
     <link rel="stylesheet" href="style.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -52,11 +55,12 @@
             </div>
         </div>
     </div>
+
     <div class="admin-modal" id="adminModal">
         <div class="admin-box animate-popup">
             <h3><i class="fas fa-lock"></i> Admin Login</h3>
             <p class="admin-hint">🔒 Klik logo UNIWEEB 3x untuk akses cepat</p>
-            <input type="password" id="adminPassword" placeholder="Password Admin">
+            <input type="password" id="adminPassword" placeholder="Password Admin" autocomplete="off">
             <button onclick="adminLogin()" class="admin-login-btn">Login</button>
             <button class="close-admin" onclick="closeAdminModal()">Batal</button>
         </div>
@@ -68,11 +72,12 @@
             <div class="admin-info">
                 <p><i class="fas fa-info-circle"></i> <strong>Cara Mengelola Event:</strong></p>
                 <p>1. Buka Google Sheets di bawah<br>2. Edit/tambah/hapus data event<br>3. Refresh halaman untuk melihat perubahan</p>
+                <p><i class="fas fa-sync-alt"></i> <strong>Auto-refresh:</strong> Data event akan otomatis update setiap 30 detik</p>
             </div>
             <a href="https://docs.google.com/spreadsheets/d/13bcBa6-abMonsrmRY6axaJHqUwjROxumSdlDoqIS4m4/edit?usp=sharing" target="_blank" class="google-sheets-btn">
                 <i class="fas fa-table"></i> Buka Google Sheets
             </a>
-            <h4><i class="fas fa-calendar-alt"></i> Daftar Event Saat Ini:</h4>
+            <h4><i class="fas fa-calendar-alt"></i> Daftar Event Saat Ini (<span id="eventCount">0</span>):</h4>
             <div id="eventList"></div>
             <button class="close-admin logout-btn" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
@@ -80,13 +85,14 @@
 
     <header id="navbar">
         <nav class="nav-container">
-            <div class="logo" id="adminLogoTrigger" data-aos="fade-right">
+            <div class="logo" id="adminLogoTrigger">
                 <span class="logo-accent">UNIWEEB</span>
+                <span class="logo-tooltip">✨</span>
             </div>
             <ul class="nav-menu" id="nav-menu">
                 <li><a href="#home" class="nav-link active">Home</a></li>
                 <li><a href="#about" class="nav-link">About U.</a></li>
-                <li><a href="#Event Anime" class="nav-link">Event Anime</a></li>
+                <li><a href="#events" class="nav-link">Event Anime</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
             <div class="nav-social">
@@ -111,21 +117,27 @@
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-text" data-aos="fade-right" data-aos-duration="1000">
-                        <p class="greeting animate-greeting">Hello, Welcome To Official Website</p>
+                        <p class="greeting animate-greeting">
+                            <i class="fas fa-star"></i> Hello, Welcome To Official Website <i class="fas fa-star"></i>
+                        </p>
                         <h1 class="hero-title"><span id="typing-text">UNIWEEB</span><span class="cursor">|</span></h1>
                         <p class="hero-quote animate-quote">Halo, User! Kehadiranmu membawa seribu warna pelangi di hariku! Jangan ragu untuk menetap, karena di sini keramahan mengalir sederas air terjun. Mari berteman sampai dunia lupa caranya berputar!</p>
                         <div class="hero-social">
                             <a href="#" class="social-link" data-url="https://discord.com/invite/EC77KPU9TE" data-platform="Discord" data-title="Buka Discord?" data-desc="Kamu akan bergabung ke server Discord UNIWEEB." data-color="#5865F2" data-emoji="🎮">
                                 <i class="fab fa-discord"></i>
+                                <span>Discord</span>
                             </a>
                             <a href="#" class="social-link" data-url="https://www.instagram.com/uniweeb_" data-platform="Instagram" data-title="Buka Instagram?" data-desc="Kamu akan diarahkan ke Instagram @uniweeb_." data-color="#C2185B" data-emoji="📸">
                                 <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
                             </a>
                             <a href="#" class="social-link" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬">
                                 <i class="fab fa-whatsapp"></i>
+                                <span>WhatsApp</span>
                             </a>
                             <a href="#" class="social-link" data-url="https://drive.google.com/drive/u/0/mobile/folders/1qJ4peh7WeSD0_rTKn9nHn44XvqiP8Gcs?pli=1" data-platform="Google Drive" data-title="Buka Google Drive?" data-desc="Kamu akan diarahkan ke Google Drive UNIWEEB." data-color="#1565C0" data-emoji="📁">
                                 <i class="fab fa-google-drive"></i>
+                                <span>Drive</span>
                             </a>
                         </div>
                     </div>
@@ -134,6 +146,7 @@
                             <div class="sun-core animate-pulse-glow">
                                 <img src="LAMBANG%20UNIWEEB/UNIWEEB%20LOGO.jpg" alt="UNIWEEB Logo">
                             </div>
+                            <div class="orbiting-circle"></div>
                         </div>
                     </div>
                 </div>
@@ -146,7 +159,8 @@
                 <div class="about-content">
                     <div class="about-left">
                         <div class="about-desc" data-aos="fade-up" data-aos-delay="100">
-                            <p>UNIWEEB dibuat pada tanggal 23 februari 2025, berawal dari sebuah grup biasa yang dibuat hanya untuk sekedar jadi grup janjian bernama "WEABOO akut", dimana grup tersebut didirikan dengan maksud agar lebih mudah berkomunikasi dengan teman mahasiswa yang memiliki hobi serupa dalam bidang jejepangan, lalu terbesitlah ide untuk membuat sebuah komunitas jejepangan, dan diberi nama "UNIWEEB", "UNI" yang bisa bermaksud UNIVERSAL dan "WEEB" yang merujuk pada grup sebelumnya "WEEBOO akut" dan diambil kata pertama "wibu" lalu Diambil lah kata "WEEB" yang akhirnya membentuk nama UNIWEEB dengan Admin Pertamanya "Valdi Nathaniel & Alif Muhamad Ramdan" dengan jumlah 12 anggota.</p>
+                            <p>UNIWEEB dibuat pada tanggal 23 Februari 2025, berawal dari sebuah grup biasa yang dibuat hanya untuk sekedar jadi grup janjian bernama "WEABOO akut", dimana grup tersebut didirikan dengan maksud agar lebih mudah berkomunikasi dengan teman mahasiswa yang memiliki hobi serupa dalam bidang jejepangan, lalu terbesitlah ide untuk membuat sebuah komunitas jejepangan, dan diberi nama "UNIWEEB".</p>
+                            <p>"UNI" yang bisa bermaksud UNIVERSAL dan "WEEB" yang merujuk pada grup sebelumnya "WEEBOO akut" dan diambil kata pertama "wibu" lalu diambillah kata "WEEB" yang akhirnya membentuk nama UNIWEEB dengan Admin Pertamanya <strong>Valdi Nathaniel & Alif Muhamad Ramdan</strong> dengan jumlah 12 anggota.</p>
                         </div>
                         <div class="skills-container" data-aos="fade-up" data-aos-delay="200">
                             <div class="skills">
@@ -170,20 +184,22 @@
             </div>
         </section>
 
-        <section id="Event Anime" class="section">
+        <section id="events" class="section">
             <div class="container">
                 <h2 class="section-title" data-aos="fade-up">Event Anime</h2>
                 <div class="events-wrapper" data-aos="fade-up" data-aos-delay="100">
                     <div class="projects-grid" id="eventsContainer">
-                        <div class="loading">Loading events...</div>
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> Loading events...
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
+        
         <section id="contact" class="section">
             <div class="container">
-                <h2 class="section-title" data-aos="fade-up">Kontak kami jika Kalian membutuhkannya!!!</h2>
+                <h2 class="section-title" data-aos="fade-up">Kontak Kami</h2>
                 <div class="contact-content">
                     <div class="contact-info" data-aos="fade-right" data-aos-delay="100">
                         <p>Tentunya! Agar informasinya sesuai dengan kebutuhanmu, ada beberapa jenis kontak yang sudah dibuat. Pilih format di bawah ini yang paling cocok dengan kebutuhanmu, lalu kamu tinggal isi datanya!</p>
@@ -191,10 +207,16 @@
                             <div class="contact-item">
                                 <i class="fas fa-envelope"></i>
                                 <span>uniweebofficial@gmail.com</span>
+                                <button class="copy-btn" onclick="copyToClipboard('uniweebofficial@gmail.com')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
                             </div>
                             <div class="contact-item">
                                 <i class="fas fa-phone-alt"></i>
-                                <span>0895803992277</span>
+                                <span>0895-8039-92277</span>
+                                <button class="copy-btn" onclick="copyToClipboard('0895803992277')">
+                                    <i class="fas fa-copy"></i>
+                                </button>
                             </div>
                             <div class="contact-item">
                                 <i class="fas fa-map-marker-alt"></i>
@@ -208,16 +230,16 @@
                     <div class="contact-form" data-aos="fade-left" data-aos-delay="100">
                         <form id="contact-form">
                             <div class="form-group">
-                                <input type="text" placeholder="Your Name" required name="user_name">
+                                <input type="text" placeholder="Nama Lengkap" required name="user_name">
                             </div>
                             <div class="form-group">
-                                <input type="email" placeholder="Your Email" required name="user_email">
+                                <input type="email" placeholder="Email Aktif" required name="user_email">
                             </div>
                             <div class="form-group">
-                                <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+                                <textarea name="message" placeholder="Pesan atau Pertanyaan" rows="5" required></textarea>
                             </div>
                             <button type="submit" class="glow-genz-button">
-                                <i class="fas fa-paper-plane"></i> Send Message
+                                <i class="fas fa-paper-plane"></i> Kirim Pesan
                             </button>
                         </form>
                     </div>
@@ -226,8 +248,37 @@
         </section>
     </main>
 
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>UNIWEEB</h3>
+                    <p>Komunitas Budaya Jepang</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#events">Events</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" data-url="https://www.instagram.com/uniweeb_" data-platform="Instagram" data-title="Buka Instagram?" data-desc="Kamu akan diarahkan ke Instagram @uniweeb_." data-color="#C2185B" data-emoji="📸"><i class="fab fa-instagram"></i></a>
+                    <a href="#" data-url="https://chat.whatsapp.com/JkHwlECRQ9u0olFwh8xVED" data-platform="WhatsApp" data-title="Gabung WhatsApp Group?" data-desc="Kamu akan bergabung ke grup WhatsApp UNIWEEB." data-color="#1B5E20" data-emoji="💬"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" data-url="https://discord.com/invite/EC77KPU9TE" data-platform="Discord" data-title="Buka Discord?" data-desc="Kamu akan bergabung ke server Discord UNIWEEB." data-color="#5865F2" data-emoji="🎮"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 UNIWEEB. All rights reserved. | Dibuat dengan <i class="fas fa-heart"></i> untuk komunitas</p>
+            </div>
+        </div>
+    </footer>
+
     <button class="admin-btn" id="adminBtn" style="display: none;" onclick="openAdminModal()">
         <i class="fas fa-tools"></i>
+    </button>
+
+    <button class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
     </button>
 
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
