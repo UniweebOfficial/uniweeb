@@ -468,22 +468,19 @@ document.addEventListener('DOMContentLoaded', () => {
     initSmoothScroll();
     initContactForm();
     initSocialLinks();
-    initScrollReveal();
     initPopupClose();
     checkAdminSession();
     initAdminLogoTrigger();
     initBackToTop();
     
-    setTimeout(() => {
-        if (typeof AOS !== 'undefined') {
-            AOS.init({
-                duration: 800,
-                once: true,
-                offset: 100,
-                easing: 'ease-out'
-            });
-        }
-    }, 100);
+    if (typeof AOS !== 'undefined') {
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 80,
+            easing: 'ease-out-cubic'
+        });
+    }
 
     setInterval(loadEventsFromSheet, 30000);
 });
