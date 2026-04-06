@@ -883,7 +883,7 @@ body::after {
 
 .admin-btn {
     position: fixed;
-    bottom: 20px;
+    bottom: 78px;
     right: 20px;
     width: 48px;
     height: 48px;
@@ -895,12 +895,15 @@ body::after {
     font-size: 22px;
     z-index: 100;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .back-to-top {
     position: fixed;
     bottom: 20px;
-    left: 20px;
+    right: 20px;
     width: 40px;
     height: 40px;
     border-radius: 50%;
