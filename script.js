@@ -159,15 +159,31 @@ function updateEventCount() {
     }
 }
 
+function closeWithAnimation(el, callback) {
+    if (!el) return;
+    const box = el.querySelector('.animate-popup');
+    if (box) {
+        box.style.animation = 'popupOut 0.2s ease forwards';
+    }
+    el.style.animation = 'overlayFadeOut 0.2s ease forwards';
+    setTimeout(() => {
+        el.classList.remove('active');
+        el.style.animation = '';
+        if (box) box.style.animation = '';
+        document.body.style.overflow = '';
+        if (callback) callback();
+    }, 200);
+}
+
 function openAdminModal() {
     document.getElementById('adminModal').classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function closeAdminModal() {
-    document.getElementById('adminModal').classList.remove('active');
-    document.getElementById('adminPassword').value = '';
-    document.body.style.overflow = '';
+    closeWithAnimation(document.getElementById('adminModal'), () => {
+        document.getElementById('adminPassword').value = '';
+    });
 }
 
 function openAdminDashboard() {
@@ -176,8 +192,7 @@ function openAdminDashboard() {
 }
 
 function closeAdminDashboard() {
-    document.getElementById('adminDashboard').classList.remove('active');
-    document.body.style.overflow = '';
+    closeWithAnimation(document.getElementById('adminDashboard'));
 }
 
 function adminLogin() {
@@ -244,8 +259,9 @@ function openSocialConfirm(e, url, platform, title, desc, color, emoji) {
 }
 
 function closeSocialConfirm() {
-    document.getElementById('socialConfirmOverlay').classList.remove('active');
-    pendingUrl = '';
+    closeWithAnimation(document.getElementById('socialConfirmOverlay'), () => {
+        pendingUrl = '';
+    });
 }
 
 function proceedSocialLink() {
@@ -261,8 +277,7 @@ function openVisiMisi(id) {
 }
 
 function closeVisiMisi(id) {
-    document.getElementById(id).classList.remove('active');
-    document.body.style.overflow = '';
+    closeWithAnimation(document.getElementById(id));
 }
 
 function initContactForm() {
