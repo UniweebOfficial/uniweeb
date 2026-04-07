@@ -53,6 +53,38 @@
     </div>
 </div>
 
+<div class="event-detail-overlay" id="eventDetailOverlay">
+    <div class="event-detail-box animate-popup">
+        <button class="event-detail-close" onclick="closeEventDetail()">✕</button>
+        <div class="event-detail-content">
+            <div class="event-detail-image">
+                <img id="detailImage" src="" alt="Event Poster">
+            </div>
+            <div class="event-detail-info">
+                <h2 id="detailName">Event Name</h2>
+                <div class="detail-meta">
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="detailLocation">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="detailDate">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span id="detailPrice">-</span>
+                    </div>
+                </div>
+                <div class="detail-description">
+                    <h3><i class="fas fa-info-circle"></i> Deskripsi Event</h3>
+                    <p id="detailDesc"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="admin-modal" id="adminModal">
     <div class="admin-box animate-popup">
         <h3><i class="fas fa-lock"></i> Admin Login</h3>
