@@ -87,7 +87,7 @@ async function loadEventsFromSheet() {
         events = [];
         for (let i = 1; i < rows.length; i++) {
             const values = rows[i].split(',').map(v => v.replace(/"/g, '').trim());
-            if (values.length >= 5 && values[0]) {
+            if (values.length >= 4 && values[0]) {
                 let imageUrl = values[4] || 'https://via.placeholder.com/300x450?text=No+Image';
                 let description = values[5] || `Nikmati serunya event "${values[0]}" bersama UNIWEEB! Event anime terbaik yang menghadirkan berbagai kegiatan menarik, cosplay competition, live music, meet & greet dengan selebriti Jepang, bazaar merchandise eksklusif, dan masih banyak lagi. Jangan lewatkan kesempatan langka ini untuk bertemu dengan sesama penggemar anime dan menikmati pengalaman tak terlupakan. Ajak teman-temanmu dan jadilah bagian dari keseruan ini!`;
                 
