@@ -1141,7 +1141,6 @@ body::after {
     to { opacity: 1; transform: translateX(0); }
 }
 
-/* ========== PERBAIKAN MOBILE CENTER ========== */
 @media (max-width: 768px) {
     .hero-content {
         flex-direction: column;
