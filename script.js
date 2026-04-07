@@ -4,8 +4,8 @@
 
 const EMAIL_CONFIG = {
     serviceId: "service_wm5965u",
-    contactTemplateId: "template_k87bzxg", 
-    autoReplyTemplateId: "template_2w0jfao", 
+    contactTemplateId: "template_k87bzxg",
+    autoReplyTemplateId: "template_2w0jfao",
     adminEmail: "uniweebofficial@gmail.com"
 };
 
@@ -87,13 +87,17 @@ async function loadEventsFromSheet() {
         events = [];
         for (let i = 1; i < rows.length; i++) {
             const values = rows[i].split(',').map(v => v.replace(/"/g, '').trim());
-            if (values.length >= 4 && values[0]) {
+            if (values.length >= 5 && values[0]) {
+                let imageUrl = values[4] || 'https://via.placeholder.com/300x450?text=No+Image';
+                let description = values[5] || `Nikmati serunya event "${values[0]}" bersama UNIWEEB! Event anime terbaik yang menghadirkan berbagai kegiatan menarik, cosplay competition, live music, meet & greet dengan selebriti Jepang, bazaar merchandise eksklusif, dan masih banyak lagi. Jangan lewatkan kesempatan langka ini untuk bertemu dengan sesama penggemar anime dan menikmati pengalaman tak terlupakan. Ajak teman-temanmu dan jadilah bagian dari keseruan ini!`;
+                
                 events.push({
-                    name: values[0] || 'Event',
+                    name: values[0],
                     date: values[1] || 'TBA',
                     location: values[2] || 'TBA',
                     price: values[3] || 'Free',
-                    image: values[4] || 'https://via.placeholder.com/300x450?text=No+Image'
+                    image: imageUrl,
+                    description: description
                 });
             }
         }
@@ -117,20 +121,51 @@ function renderEvents() {
     }
     
     container.innerHTML = events.map((event, index) => `
-        <div class="project-card" style="animation-delay: ${index * 0.1}s">
-            <div class="project-image">
+        <div class="project-card" data-event-index="${index}" style="animation-delay: ${index * 0.1}s">
+            <div class="project-image" onclick="openEventDetail(${index})">
                 <img src="${event.image}" alt="${event.name}" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'">
             </div>
             <div class="project-content">
-                <h3>${event.name}</h3>
+                <h3>${escapeHtml(event.name)}</h3>
                 <div class="project-tech">
-                    <span><i class="fas fa-calendar-alt"></i> ${event.date}</span>
-                    <span><i class="fas fa-map-marker-alt"></i> ${event.location}</span>
-                    <span><i class="fas fa-ticket-alt"></i> ${event.price}</span>
+                    <span><i class="fas fa-calendar-alt"></i> ${escapeHtml(event.date)}</span>
+                    <span><i class="fas fa-map-marker-alt"></i> ${escapeHtml(event.location)}</span>
+                    <span><i class="fas fa-ticket-alt"></i> ${escapeHtml(event.price)}</span>
                 </div>
             </div>
         </div>
     `).join('');
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+function openEventDetail(eventIndex) {
+    const event = events[eventIndex];
+    if (!event) return;
+    
+    document.getElementById('detailImage').src = event.image;
+    document.getElementById('detailName').textContent = event.name;
+    document.getElementById('detailLocation').textContent = event.location;
+    document.getElementById('detailDate').textContent = event.date;
+    document.getElementById('detailPrice').textContent = event.price;
+    document.getElementById('detailDesc').textContent = event.description;
+    
+    document.getElementById('eventDetailOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeEventDetail() {
+    closeWithAnimation(document.getElementById('eventDetailOverlay'), () => {
+        document.body.style.overflow = '';
+    });
 }
 
 function renderEventListAdmin() {
@@ -145,8 +180,8 @@ function renderEventListAdmin() {
     listContainer.innerHTML = events.map((event, index) => `
         <div class="event-list-item">
             <div style="flex:1">
-                <strong>${event.name}</strong><br>
-                <small><i class="fas fa-calendar-alt"></i> ${event.date} | <i class="fas fa-map-marker-alt"></i> ${event.location}</small>
+                <strong>${escapeHtml(event.name)}</strong><br>
+                <small><i class="fas fa-calendar-alt"></i> ${escapeHtml(event.date)} | <i class="fas fa-map-marker-alt"></i> ${escapeHtml(event.location)}</small>
             </div>
         </div>
     `).join('');
@@ -162,7 +197,6 @@ function updateEventCount() {
 function closeWithAnimation(el, callback) {
     if (!el) return;
     el.classList.remove('active');
-    document.body.style.overflow = '';
     if (callback) callback();
 }
 
@@ -174,6 +208,7 @@ function openAdminModal() {
 function closeAdminModal() {
     closeWithAnimation(document.getElementById('adminModal'), () => {
         document.getElementById('adminPassword').value = '';
+        document.body.style.overflow = '';
     });
 }
 
@@ -183,7 +218,9 @@ function openAdminDashboard() {
 }
 
 function closeAdminDashboard() {
-    closeWithAnimation(document.getElementById('adminDashboard'));
+    closeWithAnimation(document.getElementById('adminDashboard'), () => {
+        document.body.style.overflow = '';
+    });
 }
 
 function adminLogin() {
@@ -252,6 +289,7 @@ function openSocialConfirm(e, url, platform, title, desc, color, emoji) {
 function closeSocialConfirm() {
     closeWithAnimation(document.getElementById('socialConfirmOverlay'), () => {
         pendingUrl = '';
+        document.body.style.overflow = '';
     });
 }
 
@@ -268,7 +306,9 @@ function openVisiMisi(id) {
 }
 
 function closeVisiMisi(id) {
-    closeWithAnimation(document.getElementById(id));
+    closeWithAnimation(document.getElementById(id), () => {
+        document.body.style.overflow = '';
+    });
 }
 
 function initContactForm() {
@@ -455,6 +495,9 @@ function initPopupClose() {
     document.getElementById('adminDashboard')?.addEventListener('click', (e) => {
         if (e.target === e.currentTarget) closeAdminDashboard();
     });
+    document.getElementById('eventDetailOverlay')?.addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeEventDetail();
+    });
     
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
@@ -463,6 +506,7 @@ function initPopupClose() {
             closeSocialConfirm();
             closeAdminModal();
             closeAdminDashboard();
+            closeEventDetail();
         }
     });
 }
@@ -490,3 +534,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setInterval(loadEventsFromSheet, 30000);
 });
+
+window.openEventDetail = openEventDetail;
+window.closeEventDetail = closeEventDetail;
+window.openVisiMisi = openVisiMisi;
+window.closeVisiMisi = closeVisiMisi;
+window.closeSocialConfirm = closeSocialConfirm;
+window.proceedSocialLink = proceedSocialLink;
+window.adminLogin = adminLogin;
+window.logoutAdmin = logoutAdmin;
+window.openAdminModal = openAdminModal;
+window.closeAdminModal = closeAdminModal;
