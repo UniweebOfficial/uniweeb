@@ -70,6 +70,13 @@ function showNotification(message, bgColor) {
     }, 3000);
 }
 
+function formatDescription(text) {
+    if (!text) return '';
+    return text.replace(/\n/g, '<br>').replace(/https?:\/\/[^\s]+/g, function(url) {
+        return `<a href="${url}" target="_blank" style="color: #FF3838; text-decoration: underline;">${url}</a>`;
+    });
+}
+
 async function loadEventsFromSheet() {
     const container = document.getElementById('eventsContainer');
     if (!container) return;
@@ -78,7 +85,12 @@ async function loadEventsFromSheet() {
         const response = await fetch(GOOGLE_SHEETS_URL);
         const csvText = await response.text();
         
-        const rows = csvText.split('\n').filter(row => row.trim());
+        const result = Papa.parse(csvText, {
+            header: false,
+            skipEmptyLines: true
+        });
+        
+        const rows = result.data;
         if (rows.length < 2) {
             container.innerHTML = '<div class="loading">Belum ada event. Login sebagai admin untuk menambahkan event.</div>';
             return;
@@ -86,16 +98,20 @@ async function loadEventsFromSheet() {
         
         events = [];
         for (let i = 1; i < rows.length; i++) {
-            const values = rows[i].split(',').map(v => v.replace(/"/g, '').trim());
-            if (values.length >= 4 && values[0]) {
-                let imageUrl = values[4] || 'https://via.placeholder.com/300x450?text=No+Image';
-                let description = values[5] || `Nikmati serunya event "${values[0]}" bersama UNIWEEB! Event anime terbaik yang menghadirkan berbagai kegiatan menarik, cosplay competition, live music, meet & greet dengan selebriti Jepang, bazaar merchandise eksklusif, dan masih banyak lagi. Jangan lewatkan kesempatan langka ini untuk bertemu dengan sesama penggemar anime dan menikmati pengalaman tak terlupakan. Ajak teman-temanmu dan jadilah bagian dari keseruan ini!`;
+            const values = rows[i];
+            if (values.length >= 4 && values[0] && values[0].trim()) {
+                let imageUrl = (values[4] || 'https://via.placeholder.com/300x450?text=No+Image').trim();
+                let description = (values[5] || '').trim();
+                
+                if (!description) {
+                    description = `Nikmati serunya event "${values[0]}" bersama UNIWEEB! Event anime terbaik yang menghadirkan berbagai kegiatan menarik, cosplay competition, live music, meet & greet dengan selebriti Jepang, bazaar merchandise eksklusif, dan masih banyak lagi. Jangan lewatkan kesempatan langka ini untuk bertemu dengan sesama penggemar anime dan menikmati pengalaman tak terlupakan. Ajak teman-temanmu dan jadilah bagian dari keseruan ini!`;
+                }
                 
                 events.push({
-                    name: values[0],
-                    date: values[1] || 'TBA',
-                    location: values[2] || 'TBA',
-                    price: values[3] || 'Free',
+                    name: values[0].trim(),
+                    date: (values[1] || 'TBA').trim(),
+                    location: (values[2] || 'TBA').trim(),
+                    price: (values[3] || 'Free').trim(),
                     image: imageUrl,
                     description: description
                 });
@@ -156,7 +172,7 @@ function openEventDetail(eventIndex) {
     document.getElementById('detailLocation').textContent = event.location;
     document.getElementById('detailDate').textContent = event.date;
     document.getElementById('detailPrice').textContent = event.price;
-    document.getElementById('detailDesc').textContent = event.description;
+    document.getElementById('detailDesc').innerHTML = formatDescription(event.description);
     
     document.getElementById('eventDetailOverlay').classList.add('active');
     document.body.style.overflow = 'hidden';
