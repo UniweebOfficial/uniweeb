@@ -1308,3 +1308,335 @@ body::after {
         font-size: 1rem;
     }
 }
+
+@media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .hero-text {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero-social {
+        justify-content: center;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+    
+    .greeting {
+        text-align: center;
+    }
+    
+    .hero-quote {
+        text-align: center;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .contact-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .contact-info {
+        text-align: center;
+    }
+    
+    .contact-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .contact-item {
+        justify-content: center;
+    }
+    
+    .visi-misi-grid {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .visi-misi-card {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 54px;
+        left: -100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        flex-direction: column;
+        padding: 20px;
+        transition: left 0.3s ease;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .hamburger {
+        display: flex;
+    }
+    
+    .nav-social {
+        display: none;
+    }
+    
+    .avatar-container {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto;
+    }
+    
+    .sun-core {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .project-card {
+        width: 240px;
+    }
+    
+    .section {
+        padding: 40px 0;
+    }
+    
+    .section-title {
+        font-size: 1.6rem;
+        margin-bottom: 35px;
+        text-align: center;
+    }
+
+    .event-detail-box {
+        width: 95%;
+        max-width: 95%;
+        margin: 0 auto;
+    }
+
+    .event-detail-content {
+        flex-direction: column;
+    }
+
+    .event-detail-image {
+        flex: auto;
+        padding: 20px 20px 10px 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .event-detail-image img {
+        max-width: 200px;
+    }
+
+    .event-detail-info {
+        padding: 16px 20px 24px 20px;
+        text-align: center;
+    }
+
+    .event-detail-info h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        padding-left: 12px;
+        text-align: left;
+    }
+
+    .detail-meta {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+
+    .detail-item {
+        font-size: 0.8rem;
+        margin-bottom: 8px;
+        justify-content: center;
+    }
+
+    .detail-description div {
+        font-size: 0.8rem;
+        max-height: 250px;
+        text-align: left;
+    }
+    
+    .about-desc p {
+        text-align: center;
+    }
+    
+    .skills h3 {
+        text-align: center;
+    }
+    
+    .projects-grid {
+        justify-content: center;
+    }
+    
+    .contact-form {
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    .glow-genz-button {
+        justify-content: center;
+    }
+    
+    .admin-box {
+        text-align: center;
+    }
+    
+    .admin-box input {
+        text-align: center;
+    }
+    
+    .visimisi-box {
+        text-align: center;
+    }
+    
+    .visimisi-box .content-text ul {
+        text-align: left;
+    }
+    
+    .visimisi-box .content-text li {
+        text-align: left;
+    }
+    
+    .visimisi-divider {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .visimisi-badge {
+        display: inline-block;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    
+    .hero-quote {
+        font-size: 0.85rem;
+    }
+    
+    .hero-social .social-link {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+    
+    .section-title {
+        font-size: 1.4rem;
+    }
+    
+    .visi-misi-card {
+        padding: 20px 15px;
+    }
+    
+    .visi-misi-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .project-card {
+        width: 210px;
+    }
+    
+    .project-content h3 {
+        font-size: 0.85rem;
+        text-align: center;
+    }
+    
+    .project-tech span {
+        font-size: 0.65rem;
+        padding: 4px 8px;
+        display: block;
+        text-align: center;
+    }
+    
+    .project-tech {
+        align-items: center;
+    }
+
+    .event-detail-image img {
+        max-width: 160px;
+    }
+
+    .event-detail-info h2 {
+        font-size: 1rem;
+    }
+    
+    .contact-item {
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+    
+    .social-confirm-box {
+        width: 85%;
+        padding: 20px 15px;
+    }
+}
+
+.hero-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-container {
+    margin: 0 auto;
+}
+
+.about-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-desc {
+    width: 100%;
+}
+
+.skills-container {
+    width: 100%;
+}
+
+.visi-misi-grid {
+    justify-content: center;
+}
+
+.contact-details .social-link {
+    justify-content: center;
+}
+
+.event-list-item {
+    text-align: left;
+}
+
+.event-list-item small {
+    display: block;
+    margin-top: 5px;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes logoClick {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); color: var(--accent); }
+    100% { transform: scale(1); }
+}
