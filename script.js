@@ -72,9 +72,11 @@ function showNotification(message, bgColor) {
 
 function formatDescription(text) {
     if (!text) return '';
-    return text.replace(/\n/g, '<br>').replace(/https?:\/\/[^\s]+/g, function(url) {
+    let formatted = text.replace(/\n/g, '<br>');
+    formatted = formatted.replace(/https?:\/\/[^\s<]+/g, function(url) {
         return `<a href="${url}" target="_blank" style="color: #FF3838; text-decoration: underline;">${url}</a>`;
     });
+    return formatted;
 }
 
 async function loadEventsFromSheet() {
@@ -102,7 +104,6 @@ async function loadEventsFromSheet() {
             if (values.length >= 4 && values[0] && values[0].trim()) {
                 let imageUrl = (values[4] || 'https://via.placeholder.com/300x450?text=No+Image').trim();
                 let description = (values[5] || '').trim();
-                
                 if (!description) {
                     description = `Nikmati serunya event "${values[0]}" bersama UNIWEEB! Event anime terbaik yang menghadirkan berbagai kegiatan menarik, cosplay competition, live music, meet & greet dengan selebriti Jepang, bazaar merchandise eksklusif, dan masih banyak lagi. Jangan lewatkan kesempatan langka ini untuk bertemu dengan sesama penggemar anime dan menikmati pengalaman tak terlupakan. Ajak teman-temanmu dan jadilah bagian dari keseruan ini!`;
                 }
